@@ -10,7 +10,7 @@
     <div class="h-full px-8 py-4 overflow-y-auto dark:bg-gray-800 shadow-md">
         <ul class="space-y-2 font-medium mb-10">
           <div class="flex items-center justify-center p-2 ">
-            <img src="images/jobMatch.svg" class="h-12 w-36 me-3 mt-4 object-cover" alt="Flowbite Logo" />
+            <img src="images/jobMatch.svg" class="h-12 w-36 me-3 mt-4 object-cover" alt="Job Match Logo" />
          </div>
         </ul>
         <ul class="space-y-2 font-medium">

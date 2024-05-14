@@ -4,7 +4,7 @@ use App\Http\Controllers\recruiterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingPage');
 });
 
 Route::get('/dashboard', [recruiterController::class, 'index'])->name('dashboard');
