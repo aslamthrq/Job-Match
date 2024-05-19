@@ -34,16 +34,16 @@
                             </div>
                             <ul class="site-menu-main">
                                 <li class="nav-item nav-item-has-children">
-                                    <a href="" class="nav-link-item drop-trigger">Home</a>
+                                    <a href="" class="nav-link-item drop-trigger  ">Home</a>
                                 </li>
                                 <li class="nav-item nav-item-has-children">
-                                    <a href="#section-about" class="nav-link-item drop-trigger">About</a>
+                                    <a href="#section-about" class="nav-link-item drop-trigger ">About</a>
                                 </li>
                                 <li class="nav-item nav-item-has-children">
-                                    <a href="#section-feature" class="nav-link-item drop-trigger">Feature</a>
+                                    <a href="#section-feature" class="nav-link-item drop-trigger ">Layanan</a>
                                 </li>
                                 <li class="nav-item nav-item-has-children">
-                                    <a href="#section-contact" class="nav-link-item drop-trigger">Contact</a>
+                                    <a href="#section-contact" class="nav-link-item drop-trigger ">Contact</a>
                                 </li>
 
                             </ul>
@@ -53,8 +53,8 @@
 
                     <!-- Header User Event -->
                     <div class="flex items-center gap-6">
-                        <a href="login.html" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a>
-                        <a href="signup.html" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Sign up free</span></a>
+                        <a href="/login" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a>
+                        <a href="/register" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Sign up free</span></a>
                         <!-- Responsive Offcanvas Menu Button -->
                         <div class="block lg:hidden">
                             <button id="openBtn" class="hamburger-menu mobile-menu-trigger">
@@ -141,7 +141,7 @@
                                     <!-- Content Block Right -->
                                     <div class="jos relative order-2 md:order-1" data-jos_animation="fade-left">
                                         <!-- Content Image -->
-                                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="content-img-1" width="523" height="450" class="h-auto w-full rounded-[10px]" />
+                                        <img src="images/content_1.png" alt="content-img-1" width="523" height="450" class="h-auto w-full rounded-[10px]" />
                                         <!-- Content Shape -->
                                         <img src="images/tekan_biaya.png" alt="content-shape-1" width="304" height="104" class="jos absolute bottom-6 left-full hidden -translate-x-1/2 xl:inline-block" data-jos_animation="fade-up" data-jos_delay="0.3" />
                                     </div>
@@ -182,7 +182,7 @@
                                             </li>
                                             <li>
                                                 <span class="mr-3 inline-block text-xl text-ColorPurple"><i class="fa-solid fa-badge-check"></i></span>
-                                                Custum Path Selection
+                                                Custom Path Selection
                                             </li>
                                         </ul>
                                     </div>
@@ -224,8 +224,8 @@
                                     Kirimkan pesan kepada kami untuk mendapatkan jawaban atas semua pertanyaan Anda & kami akan membalas dalam waktu 24-48 jam atau sesegera mungkin.
                                 </p>
                                 <div class="jos flex flex-wrap justify-center gap-[18px]">
-                                    <a href="mailto:jobmatch6@gmail.com" class="btn is-lime is-large btn-animation group inline-block rounded-[3px]"><span>Get In Touch</span></a>
-                                    <a href="#section-feature" class="btn is-outline-white is-large btn-animation group inline-block rounded-[3px]"><span>View Services</span></a>
+                                    <a href="https://api.whatsapp.com/send/?phone=%2B6289527830486&text&type=phone_number&app_absent=0" class="btn is-lime is-large btn-animation group inline-block rounded-[3px]"><span>Whatsapp kami</span></a>
+                                    <a href="#section-feature" class="btn is-outline-white is-large btn-animation group inline-block rounded-[3px]"><span>Lihat Layanan</span></a>
                                 </div>
                             </div>
                         </div>

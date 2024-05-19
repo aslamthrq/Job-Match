@@ -153,7 +153,7 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQGD0CNlbK1JLA/profile-treasury-image-shrink_800_800/0/1680876597914?e=1715518800&v=beta&t=nD0F3QuE1KppezJJLI72b5u8WQwYlfTprMe2l1Xg2bA" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEtFoWq4_wg4Q/profile-treasury-image-shrink_800_800/0/1680828757802?e=1716516000&v=beta&t=VW9yMbkQzpT6vJ-wpqINFB6_1KM674BmCrOtO2BJc4g" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
@@ -167,7 +167,7 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEtFoWq4_wg4Q/profile-treasury-image-shrink_800_800/0/1680828757802?e=1715518800&v=beta&t=iqjWPa8XpGBI4Elp98xxGVYSTYeUc7hWvr7bkstHApg" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEdmCqW2hlHOg/profile-treasury-image-shrink_8192_8192/0/1680872603803?e=1716516000&v=beta&t=PKiZ85834GudmFtDyWRXCsHtwrxgPsZ_qY-bDq2DRRQ" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
