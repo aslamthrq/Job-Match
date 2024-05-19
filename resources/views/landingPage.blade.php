@@ -53,8 +53,8 @@
 
                     <!-- Header User Event -->
                     <div class="flex items-center gap-6">
-                        <a href="/login" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a>
-                        <a href="/register" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Sign up free</span></a>
+                        {{-- <a href="/login" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a> --}}
+                        <a href="https://api.whatsapp.com/send/?phone=%2B6289527830486&text&type=phone_number&app_absent=0" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Kontak Kami</span></a>
                         <!-- Responsive Offcanvas Menu Button -->
                         <div class="block lg:hidden">
                             <button id="openBtn" class="hamburger-menu mobile-menu-trigger">
