@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JOB MATCH</title>
+    <link rel="icon" href="{{ url('images/job-match-white.svg') }}">
     @vite(['resources/css/styleLandingPage.css','resources/css/menu.css','resources/fonts/stylesheet.css','resources/js/app.js'])
 </head>
 
@@ -52,8 +53,8 @@
 
                     <!-- Header User Event -->
                     <div class="flex items-center gap-6">
-                        <a href="/login" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a>
-                        <a href="/register" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Sign up free</span></a>
+                        {{-- <a href="/login" class="btn-text hidden hover:text-ColorPurple sm:inline-block">Login</a> --}}
+                        <a href="https://api.whatsapp.com/send/?phone=%2B6289527830486&text&type=phone_number&app_absent=0" class="btn is-lime btn-animation group hidden rounded-[3px] sm:inline-block"><span>Whatsapp kami</span></a>
                         <!-- Responsive Offcanvas Menu Button -->
                         <div class="block lg:hidden">
                             <button id="openBtn" class="hamburger-menu mobile-menu-trigger">
@@ -223,7 +224,7 @@
                                     Kirimkan pesan kepada kami untuk mendapatkan jawaban atas semua pertanyaan Anda & kami akan membalas dalam waktu 24-48 jam atau sesegera mungkin.
                                 </p>
                                 <div class="jos flex flex-wrap justify-center gap-[18px]">
-                                    <a href="wa.me/+6289527830486" class="btn is-lime is-large btn-animation group inline-block rounded-[3px]"><span>Whatsapp kami</span></a>
+                                    <a href="https://api.whatsapp.com/send/?phone=%2B6289527830486&text&type=phone_number&app_absent=0" class="btn is-lime is-large btn-animation group inline-block rounded-[3px]"><span>Whatsapp kami</span></a>
                                     <a href="#section-feature" class="btn is-outline-white is-large btn-animation group inline-block rounded-[3px]"><span>Lihat Layanan</span></a>
                                 </div>
                             </div>
