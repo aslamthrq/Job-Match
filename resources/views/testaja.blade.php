@@ -1,32 +1,32 @@
-
-
-<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-        <li class="me-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-        </li>
-        <li class="me-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</button>
-        </li>
-        <li class="me-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
-        </li>
-        <li role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
-        </li>
-    </ul>
-</div>
-<div id="default-tab-content">
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+<div tabindex="0" class="mb-10 rounded-md p-4 focus:outline-none focus-within:border-l-8 focus-within:border-e73002 shadow-md"> 
+    <div class="grid grid-cols-5 gap-4 ">
+        <select id="small" class="col-end-6 col-span-1 block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onchange="document.getElementById('UploudBerkas').style.display = (this.value === 'UploudBerkas' ? 'grid' : 'none'); 
+                          document.getElementById('invitationSelection').style.display = (this.value === 'Invitation'  ? 'grid' : 'none');
+                          document.getElementById('challengeSelection').style.display = (this.value === 'Challenge'  ? 'grid' : 'none');
+                          ">
+            <option>Tipe seleksi</option>
+            <option selected value="UploudBerkas">Uploud Berkas</option>
+            <option value="Invitation">Invitation</option>
+            <option value="Challenge">Challenge</option>
+        </select>
     </div>
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    <div id="UploudBerkas" class="grid grid-cols-5 gap-4" style="display: grid;">
+        <form class="col-span-5">
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi Berkas</label>
+            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 " placeholder="Masukkan deskripsi seleksi"></textarea>
+        </form>
     </div>
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    <div id="invitationSelection" class="grid grid-cols-5 gap-4" style="display: none;">
+        <form class="col-span-5">
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi Invitation</label>
+            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 " placeholder="Masukkan deskripsi seleksi"></textarea>
+        </form>
     </div>
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    <div id="challengeSelection" class="grid grid-cols-5 gap-4" style="display: none;">
+        <form class="col-span-5">
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi challange</label>
+            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 " placeholder="Masukkan deskripsi seleksi"></textarea>
+        </form>
     </div>
 </div>
