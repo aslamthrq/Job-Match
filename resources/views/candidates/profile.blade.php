@@ -6,10 +6,10 @@
     <title>Selection Process</title>
 </head>
 <body>
-@include('components.sidebar')
+@include('candidates.components.sidebar')
      
- <div class="sm:ml-80">
-    <div class="flex p-4 mx-12 mt-12 mb-6 shadow-lg rounded-lg dark:border-gray-700">
+ <div class="sm:ml-80 p-4">
+    <div class="flex p-4 mb-6 shadow-lg rounded-lg dark:border-gray-700">
         <div class="relative flex-none me-4">
             <img class="w-28 h-28 object-cover rounded-lg" src="https://images.unsplash.com/photo-1561131989-b8112bafbd43?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="profile image">
             <span class="top-24 start-24 absolute w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
@@ -19,9 +19,10 @@
             <div class="font-semibold text-sm text-gray-500">I'm a sixth semester S1-Engineering Informatics student at Dian Nuswantoro University. I'm actively involved in BEM FIK UDINUS and Radio Swara Dian, gaining experience in organizing campus-wide events. I'm passionate about Machine Learning and other tech areas like Cloud Computing, NLP, IoT, and Networking, and I'm open to connecting with professionals for potential collaborations or projects.</div>
             <div class="font-normal text-gray-500">Semarang, Indonesia</div>
         </div>  
+        
     </div>
 
-    <div class=" p-4 mx-12 shadow-lg rounded-lg dark:border-gray-700">
+    <div class=" p-4 shadow-lg rounded-lg dark:border-gray-700">
         <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
                 <li class="me-2" role="presentation">
@@ -34,9 +35,41 @@
                     <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
                 </li>
             </ul>
+               
         </div>
         <div id="default-tab-content">
-            <div class="hiddenrounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="relative hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <button type="button" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white  hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center ">
+                  
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                      </svg>
+                      
+                    <span class="sr-only">Edit Banner</span>
+                </button>
+                <div class="flex flex-col gap-4 p-4 justify-center mb-4 rounded bg-white shadow-lg dark:bg-gray-800">
+                    <div class="text-base font-semibold">Pendidikan</div>
+                    <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
+                        <img class="w-10 h-10 object-cover" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Logo_udinus1.jpg" alt="Jese image">
+                        <div class="ps-3 w-full">
+                            <div class="text-base font-semibold">Universitas Dian Nuswantoro</div>
+                            <div class="font-normal text-gray-500">S1-Teknik Infromatika</div>
+                        </div>
+                        <div class="ps-3 w-full text-right">
+                            <div class="text-base font-semibold ">2021 - Sekarang</div>
+                        </div>                             
+                    </div>
+                    <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
+                        <img class="w-10 h-10 object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA_Tg1MtWmyrOZi6AY3jXa9Hcgd2K1YJnzVA&s" alt="Jese image">
+                        <div class="ps-3 w-full">
+                            <div class="text-base font-semibold">SMA N 4 Semarang</div>
+                            <div class="font-normal text-gray-500">MIPA</div>
+                        </div>
+                        <div class="ps-3 w-full text-right">
+                            <div class="text-base font-semibold ">2018 - 2021</div>
+                        </div>                             
+                    </div>
+                </div>
                     <div class="grid grid-cols-3 gap-4 mb-4">
                         <div class="p-4 items-center justify-center  rounded bg-white shadow-lg dark:bg-gray-800">
                             <div class="text-base font-semibold mb-2">Sosial Media</div>
@@ -94,29 +127,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-4 p-4 justify-center mb-4 rounded bg-white shadow-lg dark:bg-gray-800">
-                        <div class="text-base font-semibold">Pendidikan</div>
-                        <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
-                            <img class="w-10 h-10 object-cover" src="https://upload.wikimedia.org/wikipedia/commons/9/98/Logo_udinus1.jpg" alt="Jese image">
-                            <div class="ps-3 w-full">
-                                <div class="text-base font-semibold">Universitas Dian Nuswantoro</div>
-                                <div class="font-normal text-gray-500">S1-Teknik Infromatika</div>
-                            </div>
-                            <div class="ps-3 w-full text-right">
-                                <div class="text-base font-semibold ">2021 - Sekarang</div>
-                            </div>                             
-                        </div>
-                        <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
-                            <img class="w-10 h-10 object-cover" src="https://sman4semarang.sch.id/wp-content/uploads/2022/06/Picture1.png" alt="Jese image">
-                            <div class="ps-3 w-full">
-                                <div class="text-base font-semibold">SMA N 4 Semarang</div>
-                                <div class="font-normal text-gray-500">MIPA</div>
-                            </div>
-                            <div class="ps-3 w-full text-right">
-                                <div class="text-base font-semibold ">2018 - 2021</div>
-                            </div>                             
-                        </div>
-                    </div>
+                    
                     
                 
                 
@@ -125,7 +136,7 @@
                 <div class="grid grid-cols-4 gap-4">
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQGoQfDjHJaIsQ/feedshare-shrink_2048_1536/0/1706456185534?e=1717632000&v=beta&t=VV_ch-_qQUrh3AVqF6I6z22pjLDaKDFOx4uq2aEYSbA" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQGoQfDjHJaIsQ/feedshare-shrink_2048_1536/0/1706456185534?e=1721865600&v=beta&t=vh73LL1UQBanZMOdyD9WzfwmtMwPeq1-yBocDa1JD70" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
@@ -139,7 +150,7 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQFWsbhmjiuXxQ/feedshare-shrink_1280/0/1706456126253?e=1717632000&v=beta&t=bu7Jc15cuSQs5LFeD-p8gMB_t4XmZGLSgbzC8RBgv30" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQFvXlyNopB19g/feedshare-shrink_2048_1536/0/1706456134681?e=1721865600&v=beta&t=IwiFhmMmYVqWHZ-aEAd7oiDYEjoDtyk4o9EgBhvU_30" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
@@ -153,7 +164,7 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEtFoWq4_wg4Q/profile-treasury-image-shrink_800_800/0/1680828757802?e=1716516000&v=beta&t=VW9yMbkQzpT6vJ-wpqINFB6_1KM674BmCrOtO2BJc4g" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEtFoWq4_wg4Q/profile-treasury-image-shrink_800_800/0/1680828757802?e=1719849600&v=beta&t=BD_a4Bva7ETT7b0qGEaT5vBie1RIn5SUAEP2cMLvpDQ" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
@@ -167,7 +178,7 @@
                     </div>
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEdmCqW2hlHOg/profile-treasury-image-shrink_8192_8192/0/1680872603803?e=1716516000&v=beta&t=PKiZ85834GudmFtDyWRXCsHtwrxgPsZ_qY-bDq2DRRQ" alt="" />
+                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQGV2Yvij34P9g/profile-treasury-image-shrink_8192_8192/0/1680872378166?e=1719849600&v=beta&t=wqSOOzLFZQK4eE4sS4fpH6xzT0yZBPPyEiPZOIdxclk" alt="" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">

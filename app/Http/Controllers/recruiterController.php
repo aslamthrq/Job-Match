@@ -18,8 +18,16 @@ class recruiterController extends Controller
     {
         return view('recruiter.postRoomDetail');
     }
-    public function profile()
+    public function companyProfile()
     {
-        return view('recruiter.profile');
+        return view('recruiter.companyProfile');
+    }
+    public function kandidat()
+    {
+        return view('recruiter.talentPool');
+    }
+    public function companyProfileSettings()
+    {
+        return view('recruiter.settingsProfile');
     }
 }

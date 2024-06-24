@@ -16,6 +16,8 @@
     },
     "dependencies": {
         "apexcharts": "^3.49.1",
-        "flowbite-datepicker": "^1.2.7"
+        "ckeditor5-build-classic": "^1.0.0",
+        "flowbite-datepicker": "^1.2.7",
+        "trix": "^2.1.1"
     }
 }
