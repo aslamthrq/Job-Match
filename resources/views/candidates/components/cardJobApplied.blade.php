@@ -1,4 +1,4 @@
-<a href="#" class="inline-flex p-2 bg-slate-100 text-white rounded-lg active" aria-current="page">
+<a href="statusDetail" class="inline-flex p-2 bg-slate-100 text-white rounded-lg active" aria-current="page">
     <div class="w-full">
         <div class="flex">
             <img class="w-16 h-16 border rounded-lg" src="{{ url('images/logoJobMatch.png') }}" alt="Jese image">
