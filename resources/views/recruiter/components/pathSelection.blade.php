@@ -21,7 +21,7 @@
 
           <div class="uploud-berkas grid grid-cols-5 gap-4" style="display: none;">        
               <form class="col-span-5">
-                  <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi Penyeleksian Berkas</label>
+                  <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan deskripsi seleksi"></textarea>
               </form>
               <div class=" col-span-2">
@@ -51,11 +51,16 @@
                   <input class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file">
               </div>
           </div>
-          <div class="challange-selection grid grid-cols-5 gap-4" style="display: none;">        
+          <div class="challange-selection grid grid-cols-5 gap-4" style="display: none;">  
+                  
               <form class="col-span-5">
-                  <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi Challange</label>
+                  <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan deskripsi seleksi"></textarea>
               </form>
+              <div class="col-span-5">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Link lampiran Challange</label>
+                <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan lokasi atau link online meeting" required="">
+            </div>
               <div class=" col-span-2">
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Rentang waktu</label>
                   <div date-rangepicker class="flex items-center">

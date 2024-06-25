@@ -44,10 +44,6 @@
             </nav>
             
             <h2 class="text-xl text-gray-900 font-bold mb-2">Marketing Manager</h2>
-           
-
-            
-            
 
             <div class=" p-4 border bg-gray-50  rounded-xl mb-4">
                 <ul class="flex items-center w-full text-sm font-medium text-center text-e73002 sm:text-base" id="default-tab" data-tabs-toggle="#default-tab-content" data-tabs-active-classes="text-e73002" data-tabs-inactive-classes="text-gray-500" role="tablist">
@@ -56,7 +52,7 @@
                             <div class="ps-3">
                                 <span class="inline-flex items-center justify-center w-8 h-8 bg-e73002 text-white rounded-full" >1</span>
                                 <div class="flex items-center after:content-['/']  sm:after:hidden after:mx-2 after:text-gray-200">
-                                    Participant <span class="hidden sm:inline-flex sm:ms-2">Info</span>
+                                     <span class="hidden sm:inline-flex sm:ms-2">Pemberkasan</span>
                                 </div>
                                 <div class="block mt-2 text-xs text-gray-500">16 Maret 2024</div>
                             </div>
@@ -67,18 +63,18 @@
                             <div class="ps-3">
                                 <span class="inline-flex items-center justify-center w-8 h-8 bg-e73002 text-white rounded-full">2</span>
                                 <div class="flex items-center after:content-['/']  sm:after:hidden after:mx-2 after:text-gray-200 ">
-                                     <span class="hidden sm:inline-flex sm:ms-2">Pemberkasan</span>
+                                    Meet<span class="hidden sm:inline-flex sm:ms-2"> Invitation</span>
                                 </div>
                                 <div class="block mt-2 text-xs text-gray-500">21 Maret 2024</div>
                             </div>
                         </button>   
                     </li>
                     <li class="flex items-center" role="path point selection">
-                        <button class="me-2 flex" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="true">
+                        <button class="me-2 flex" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
                             <div class="ps-3">
                                 <span class="inline-flex items-center justify-center w-8 h-8 bg-e73002 text-white rounded-full">3</span>
                                 <div class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200">
-                                    Meet <span class="hidden sm:inline-flex sm:ms-2">Ivitation</span>
+                                    Challange <span class="hidden sm:inline-flex sm:ms-2"></span>
                                 </div>
                                 <div class="block mt-2 text-xs text-gray-500">16 Mei 2024</div>
                             </div>
@@ -89,13 +85,13 @@
             </div>
             <div id="default-tab-content">
                 <div class="hidden p-4 rounded-lg bg-gray-50 border" id="participant" role="tabpanel" aria-labelledby="participant-tab">
-                   @include('recruiter.components.participantTable')
+                   @include('candidates.components.pemberkasan')
                 </div>
                 <div class="hidden p-4 rounded-lg bg-gray-50 border" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                    @include('recruiter.components.pemberkasanTable')
+                    @include('candidates.components.meetInvitation')
                 </div>
                 <div class="hidden p-4 rounded-lg bg-gray-50 border" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    @include('recruiter.components.meetInvitationTable')
+                    @include('candidates.components.challange')
                 </div>
             </div>
         </div>
