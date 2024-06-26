@@ -53,11 +53,21 @@ class AuthController extends Controller
                 }
             } else {
                 Auth::logout();
-                return redirect('/login')->withErrors('Anda tidak memiliki peran yang sesuai')->withInput();
+                session(['selected_tab' => $request->input('selected_tab')]); // Simpan tab terakhir yang dipilih sebelum logout
+
+                return redirect('/login')
+                    ->withErrors('Anda tidak terdaftar dengan peran yang sesuai')
+                    ->withInput();
             }
         } else {
-            return redirect('/login')->withErrors('Email atau password salah')->withInput();
+            return redirect('login')->withErrors('Email atau password salah')->withInput();
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('login')->withErrors('Berhasil Keluar');
     }
 
     public function showRegisterForm()

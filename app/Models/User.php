@@ -22,6 +22,12 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+    
     public function roles()
     {
         return $this->belongsToMany(role::class, 'role_users');
@@ -36,6 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(candidates::class);
     }
+
+    
 
     /**
      * The attributes that should be hidden for serialization.
