@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class companies_type extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['type'];
+
+    public function companies()
+    {
+        return $this->belongsToMany(companies::class, 'pivot_companies_types');
+    }
 }

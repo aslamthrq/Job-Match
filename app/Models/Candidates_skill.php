@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Candidates_skill extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['skill_name', 'percentage'];
+
+    public function candidates()
+    {
+        return $this->belongsToMany(candidates::class, 'pivot_candidate_skills');
+    }
 }

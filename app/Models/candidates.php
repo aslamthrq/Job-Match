@@ -8,4 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class candidates extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'full_name', 'bio', 'address', 'skills', 'experience'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Candidates_skill::class, 'pivot_candidate_skills');
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Candidates_language::class, 'pivot_candidate_languages');
+    }
+
+    public function educationalHistories()
+    {
+        return $this->belongsToMany(educational_history::class, 'pivot_candidate_educations');
+    }
+
+    public function experiences()
+    {
+        return $this->belongsToMany(traces_of_experience::class, 'pivot_candidate_experiences');
+    }
 }
