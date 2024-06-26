@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -77,7 +82,44 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Logic for registering a new user
+        $validator = FacadesValidator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8',
+            'role_id' => 'required|exists:roles,id'
+        ]);
+
+        if ($validator->fails()) {
+            session(['selected_tab' => $request->input('selected_tab')]); // Simpan tab terakhir yang dipilih sebelum logout
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            // User exists, attach the new role
+            if (!$user->roles->contains($request->role_id)) {
+                $user->roles()->attach($request->role_id, [
+                    'created_at' => $request->created_at ?? Carbon::now(),
+                    'updated_at' => $request->updated_at ?? Carbon::now(),
+                ]);
+            }
+        } else {
+            // User does not exist, create new user
+            $user = User::create([
+                'username' => 'user_' . Str::random(8),
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'created_at' => $request->created_at ?? Carbon::now(),
+                'updated_at' => $request->updated_at ?? Carbon::now(),
+            ]);
+
+            $user->roles()->attach($request->role_id, [
+                'created_at' => $request->created_at ?? Carbon::now(),
+                'updated_at' => $request->updated_at ?? Carbon::now(),
+            ]);
+        }
+
+        return redirect()->route('login')->with('message', 'Registration successful. Please login.');
     }
 
     public function showForgotPasswordForm()

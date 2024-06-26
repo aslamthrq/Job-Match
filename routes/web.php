@@ -10,7 +10,12 @@ Route::middleware('guest')->group(function () {
     Route::get('/', [LandingPageController::class, 'index'])->name('landingPage');
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('save.selected.tab');;
+    Route::post('/login', [AuthController::class, 'login'])->middleware('save.selected.tab');
+
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->middleware('save.selected.tab');
+
+    
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -49,8 +54,7 @@ Route::prefix('dashboard')->group(function () {
 Route::get('/cariLowongan', function () {
     return view('jobList');
 });
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+
 
 Route::get('/password/reset', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
 Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');

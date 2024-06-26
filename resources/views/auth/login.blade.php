@@ -34,6 +34,7 @@
                             $index = 0;
                         @endphp
 
+                        
                         @if($errors->any())
                             @foreach ($errors->all() as $error)
                                 @php
