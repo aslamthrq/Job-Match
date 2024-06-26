@@ -32,8 +32,12 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('recruiter')->middleware('role:recruiter')->group(function () {
         Route::get('/', [RecruiterController::class, 'index'])->name('dashboard.recruiter');
         Route::get('/companyProfile', [RecruiterController::class, 'companyProfile'])->name('dashboard.recruiter.companyProfile');
+        Route::get('/selectionRoom', [recruiterController::class, 'selectionRoom'])->name('dashboard.recruiter.selectionRoom');
+        Route::get('/selectionRoom/001', [recruiterController::class, 'selectionRoomDetail'])->name('dashboard.recruiter.selectionRoom/001');
+        Route::get('/candidate', [recruiterController::class, 'candidate'])->name('dashboard.recruiter.candidate');
     });
 
+    
     // Recruiter routes
     // Route::prefix('admin')->group(function () {
     //     Route::get('/', [adminController::class, 'index'])->name('dashboard.admin');
@@ -63,9 +67,9 @@ Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('
 
 
 
-Route::get('/postroom', [recruiterController::class, 'postroom'])->name('postroom');
+
 Route::get('/postroom1', [recruiterController::class, 'detailPostroom'])->name('detailPostroom');
-Route::get('/kandidat', [recruiterController::class, 'kandidat'])->name('kandidat');
+
 Route::get('/profile', [candidatesController::class, 'profile'])->name('profile');
 Route::get('/companyProfile', [recruiterController::class, 'companyProfile'])->name('companyProfile');
 Route::get('/companyProfileSettings', [recruiterController::class, 'companyProfileSettings'])->name('companyProfileSettings');

@@ -10,11 +10,11 @@ class recruiterController extends Controller
     {
         return view('recruiter.index');
     }
-    public function postroom()
+    public function selectionRoom()
     {
         return view('recruiter.postRoom');
     }
-    public function detailPostroom()
+    public function selectionRoomDetail()
     {
         return view('recruiter.postRoomDetail');
     }
@@ -22,7 +22,7 @@ class recruiterController extends Controller
     {
         return view('recruiter.companyProfile');
     }
-    public function kandidat()
+    public function candidate()
     {
         return view('recruiter.talentPool');
     }
