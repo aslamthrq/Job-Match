@@ -46,7 +46,7 @@
                                     <a href="/#section-contact" class="nav-link-item drop-trigger ">Contact</a>
                                 </li>
                                 <li class="nav-item nav-item-has-children">
-                                    <a href="/cariLowongan" class="nav-link-item drop-trigger ">Cari Lowongan</a>
+                                    <a href="{{ route('cariLowongan') }}" class="nav-link-item drop-trigger ">Cari Lowongan</a>
                                 </li>
                             </ul>
                         </nav>

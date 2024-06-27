@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('skills', 255)->nullable();
+            $table->string('photo_path', 255)->nullable();
             $table->text('experience')->nullable();
             $table->timestamps();
 

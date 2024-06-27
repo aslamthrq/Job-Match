@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\candidates;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,6 +14,11 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    public function profile()
+    {
+        return view('profile');
+    }
+
     public function showLoginForm()
     {
         return view('auth.login');
@@ -69,6 +75,42 @@ class AuthController extends Controller
         }
     }
 
+    public function showIdentityForm()
+    {
+        return view('auth.lengkapiProfile');
+    }
+    public function lengkapiProfil(Request $request, $username)
+    {
+        // Validasi input dari form
+        $validatedData = $request->validate([
+            'floating_first_name' => 'required|string|max:255',
+            'floating_last_name' => 'required|string|max:255',
+            'floating_bio' => 'nullable|string',
+            'floating_address' => 'required|string|max:255',
+        ]);
+
+        // Ambil user berdasarkan username
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            // Handle jika user tidak ditemukan
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        // Simpan data ke dalam tabel candidates
+        $candidate = new candidates();
+        $candidate->user_id = $user->id;
+        $candidate->full_name = $validatedData['floating_first_name'] . ' ' . $validatedData['floating_last_name'];
+        $candidate->bio = $validatedData['floating_bio'];
+        $candidate->address = $validatedData['floating_address'];
+        // Tambahkan logic untuk menyimpan path foto jika diperlukan
+
+        $candidate->save();
+
+        // Redirect ke halaman login atau ke halaman lain sesuai kebutuhan setelah data tersimpan
+        return redirect()->route('login')->with('success', 'Profile completed successfully.');
+    }
+
     public function logout()
     {
         Auth::logout();
@@ -95,13 +137,27 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        // Cek apakah user ditemukan dan cocok dengan email dan password
         if ($user) {
-            // User exists, attach the new role
-            if (!$user->roles->contains($request->role_id)) {
-                $user->roles()->attach($request->role_id, [
-                    'created_at' => $request->created_at ?? Carbon::now(),
-                    'updated_at' => $request->updated_at ?? Carbon::now(),
-                ]);
+            if (Hash::check($request->password, $user->password)) {
+                // User exists and password matches, assign the new role
+                if (!$user->roles->contains($request->role_id)) {
+                    $user->roles()->attach($request->role_id, [
+                        'created_at' => $request->created_at ?? Carbon::now(),
+                        'updated_at' => $request->updated_at ?? Carbon::now(),
+                    ]);
+                    // Cek apakah kolom nama sudah terisi di tabel candidates
+                    if (!empty($user->candidate->full_name)) {
+                        // Jika sudah terisi, arahkan ke halaman login
+                        return redirect()->route('login')->with('message', 'Email already registered. Please login.');
+                    } else {
+                        // Jika belum terisi, arahkan ke route identityForm
+                        return redirect()->route('identityForm', ['username' => $user->username]);
+                    }
+                }
+            } else {
+                // Password tidak cocok, kembalikan dengan pesan error
+                return back()->withErrors(['password' => 'Gunakan password yang sama di role lain yang telah terdaftarkan untuk konfirmasi.'])->withInput();
             }
         } else {
             // User does not exist, create new user
@@ -119,7 +175,8 @@ class AuthController extends Controller
             ]);
         }
 
-        return redirect()->route('login')->with('message', 'Registration successful. Please login.');
+        // Arahkan ke halaman identityForm dengan parameter username
+        return redirect()->route('identityForm', ['username' => $user->username])->with('message', 'Registration successful. Please complete your profile.');
     }
 
     public function showForgotPasswordForm()

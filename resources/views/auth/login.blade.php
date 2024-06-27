@@ -9,7 +9,7 @@
         <section class="bg-gray-50 dark:bg-gray-900">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="/">
-                    <img src="images/jobMatch.svg" alt="Job Match" width="109" height="24" />
+                    <img src="{{ URL('images/jobMatch.svg') }}" alt="Job Match" width="109" height="24" />
                 </a>
                 <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4">
@@ -57,9 +57,9 @@
                                 </div>
                             @endforeach
                         @endif
-                            <div class="hiddenrounded-lg bg-gray-50 dark:bg-gray-800" id="recruiter" role="tabpanel" aria-labelledby="recruiter-tab">
+                            <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="recruiter" role="tabpanel" aria-labelledby="recruiter-tab">
                                
-                                <form class="space-y-4 md:space-y-6"  method="POST">
+                                <form class="space-y-4 md:space-y-6"  method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div>
                                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -89,9 +89,9 @@
                                     </p>
                                 </form>
                             </div>
-                            <div class="hiddenrounded-lg bg-gray-50 dark:bg-gray-800" id="participant" role="tabpanel" aria-labelledby="participant-tab">
+                            <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="participant" role="tabpanel" aria-labelledby="participant-tab">
                                 
-                                <form class="space-y-4 md:space-y-6" method="POST">
+                                <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <input class="hidden" type="text" name="role_id" id="role_id" value="2" >
                                     <input type="hidden" name="selected_tab" value="participant">

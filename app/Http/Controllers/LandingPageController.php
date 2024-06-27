@@ -10,4 +10,8 @@ class LandingPageController extends Controller
     {
         return view('landingPage');
     }
+    public function cariLowongan()
+    {
+        return view('jobList');
+    }
 }

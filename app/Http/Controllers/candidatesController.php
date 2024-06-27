@@ -10,10 +10,11 @@ class candidatesController extends Controller
     {
         return view('candidates.index');
     }
-    public function profileKandidat()
+    public function showProfile()
     {
         return view('candidates.profile');
     }
+    
     public function lowongan()
     {
         return view('candidates.jobVacancy');
