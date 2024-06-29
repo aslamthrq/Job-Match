@@ -12,6 +12,8 @@
    <body>
       {{-- @include('components.navbar') --}}
       @include('recruiter.components.sidebar')
+
+      
       
       <div class="sm:ml-80">
          <div class="p-4 m-4 rounded-lg dark:border-gray-700">

@@ -19,8 +19,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/identityForm/{username}', [AuthController::class, 'showIdentityForm'])->name('identityForm');
     Route::post('/identityForm/{username}', [AuthController::class, 'lengkapiProfil']);
 
-
-
+    Route::get('/companyForm/{id}', [AuthController::class, 'showCompanyIdentityForm'])->name('showCompanyIdentityForm');
+    Route::post('/companyForm/{id}', [AuthController::class, 'updateCompany'])->name('updateCompany');
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

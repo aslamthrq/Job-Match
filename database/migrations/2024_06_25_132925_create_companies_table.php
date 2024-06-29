@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('company_name', 255)->notNull();
             $table->string('company_address', 255)->nullable();
             $table->string('company_website', 255)->nullable();
+            $table->string('company_motto', 255)->nullable();
+            $table->string('company_description', 255)->nullable();
             $table->timestamps(); // Tambahkan kolom created_at dan updated_at
         });
     }

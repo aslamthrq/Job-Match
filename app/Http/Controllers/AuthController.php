@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\candidates;
+use App\Models\companies;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +16,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+
     public function profile()
     {
         return view('profile');
@@ -97,18 +100,54 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'User not found.');
         }
 
-        // Simpan data ke dalam tabel candidates
-        $candidate = new candidates();
-        $candidate->user_id = $user->id;
+        // Cek apakah user sudah memiliki profil Candidate
+        if ($user->candidate()->exists()) {
+            // Jika sudah ada profil, update saja data yang diperlukan
+            $candidate = $user->candidate;
+        } else {
+            // Jika belum ada, buat profil baru untuk user ini
+            $candidate = new candidates();
+            $candidate->user_id = $user->id;
+        }
+
+        // Simpan data dari form ke dalam profil Candidate
         $candidate->full_name = $validatedData['floating_first_name'] . ' ' . $validatedData['floating_last_name'];
         $candidate->bio = $validatedData['floating_bio'];
         $candidate->address = $validatedData['floating_address'];
-        // Tambahkan logic untuk menyimpan path foto jika diperlukan
+        // Tambahkan logika untuk menyimpan path foto jika diperlukan
 
         $candidate->save();
 
-        // Redirect ke halaman login atau ke halaman lain sesuai kebutuhan setelah data tersimpan
-        return redirect()->route('login')->with('success', 'Profile completed successfully.');
+        return redirect()->route('login')->withErrors('Profile completed successfully.');
+    }
+
+    public function showCompanyIdentityForm()
+    {
+        return view('auth.registerCompanyProfile');
+    }
+
+    public function updateCompany(Request $request, $id)
+    {
+        // Validasi input
+        $validatedData = $request->validate([
+            'floating_company_name' => 'required|string|max:255',
+            'floating_address' => 'required|string|max:255',
+            'floating_description' => 'nullable|string',
+        ]);
+
+        // Cari data company berdasarkan ID
+        $company = companies::findOrFail($id);
+
+        // Update data company
+        $company->company_name = $validatedData['floating_company_name'];
+        $company->company_address = $validatedData['floating_address'];
+        $company->company_description = $validatedData['floating_description'];
+        // Tambahkan logika lain sesuai kebutuhan seperti user_id jika perlu
+
+        $company->save();
+
+        // Redirect dengan pesan sukses atau ke halaman lain sesuai kebutuhan
+        return redirect()->route('login')->with('success', 'Company profile successfully updated.');
     }
 
     public function logout()
@@ -124,40 +163,65 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        // Validate incoming request data
         $validator = FacadesValidator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|confirmed|min:8',
             'role_id' => 'required|exists:roles,id'
         ]);
 
+        // If validation fails, redirect back with errors and input data
         if ($validator->fails()) {
-            session(['selected_tab' => $request->input('selected_tab')]); // Simpan tab terakhir yang dipilih sebelum logout
+            session(['selected_tab' => $request->input('selected_tab')]);
             return back()->withErrors($validator)->withInput();
         }
 
+        // Check if user with the given email already exists
         $user = User::where('email', $request->email)->first();
 
-        // Cek apakah user ditemukan dan cocok dengan email dan password
         if ($user) {
+            // User exists, check password
             if (Hash::check($request->password, $user->password)) {
-                // User exists and password matches, assign the new role
+                // Password matches, assign the new role if not already assigned
                 if (!$user->roles->contains($request->role_id)) {
-                    $user->roles()->attach($request->role_id, [
-                        'created_at' => $request->created_at ?? Carbon::now(),
-                        'updated_at' => $request->updated_at ?? Carbon::now(),
-                    ]);
-                    // Cek apakah kolom nama sudah terisi di tabel candidates
+                    $user->roles()->attach($request->role_id);
+                }
+
+                // Check if the user already has a candidate record
+                if ($request->role_id == 2) {
+                    // Participant role, check candidate profile
                     if (!empty($user->candidate->full_name)) {
-                        // Jika sudah terisi, arahkan ke halaman login
-                        return redirect()->route('login')->with('message', 'Email already registered. Please login.');
+                        // If candidate profile is complete, redirect to login
+                        return redirect()->route('login')->withErrors('Email already registered. Please login.');
                     } else {
-                        // Jika belum terisi, arahkan ke route identityForm
-                        return redirect()->route('identityForm', ['username' => $user->username]);
+                        // If candidate profile is incomplete, redirect to identityForm
+                        return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Please complete your profile.');
+                    }
+                } elseif ($request->role_id == 3) {
+                    // Recruiter role, check company profile
+                    $companyUser = $user->companyUser;
+
+                    if ($companyUser && $companyUser->company_id) {
+                        // If recruiter is associated with a company, redirect to appropriate dashboard or page
+                        return redirect()->route('dashboard.recruiter')->with('success', 'Registration successful.');
+                    } else {
+                        // If recruiter is not associated with a company, create a new company
+                        $company = new companies();
+                        $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
+                        $company->save();
+
+                        // Associate user with the newly created company
+                        $user->companyUser()->create([
+                            'company_id' => $company->id,
+                        ]);
+
+                        // Redirect to company identity form with the newly created company's ID
+                        return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Please complete your company profile.');
                     }
                 }
             } else {
-                // Password tidak cocok, kembalikan dengan pesan error
-                return back()->withErrors(['password' => 'Gunakan password yang sama di role lain yang telah terdaftarkan untuk konfirmasi.'])->withInput();
+                // Password does not match, return with error
+                return back()->withErrors(['password' => 'Password does not match with the registered account.'])->withInput();
             }
         } else {
             // User does not exist, create new user
@@ -165,19 +229,45 @@ class AuthController extends Controller
                 'username' => 'user_' . Str::random(8),
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'created_at' => $request->created_at ?? Carbon::now(),
-                'updated_at' => $request->updated_at ?? Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
+            // Assign the role to the newly created user
             $user->roles()->attach($request->role_id, [
-                'created_at' => $request->created_at ?? Carbon::now(),
-                'updated_at' => $request->updated_at ?? Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
-        }
 
-        // Arahkan ke halaman identityForm dengan parameter username
-        return redirect()->route('identityForm', ['username' => $user->username])->with('message', 'Registration successful. Please complete your profile.');
+            // Create a candidate record for participant role
+            if ($request->role_id == 2) {
+                candidates::create([
+                    'user_id' => $user->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                // Redirect to identityForm route with username parameter
+                return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Registration successful. Please complete your profile.');
+            }
+
+            // For recruiter role, create a new company and redirect to company identity form
+            if ($request->role_id == 3) {
+                $company = new companies();
+                $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
+                $company->save();
+
+                // Associate user with the newly created company
+                $user->companyUser()->create([
+                    'company_id' => $company->id,
+                ]);
+
+                // Redirect to company identity form with the newly created company's ID
+                return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Registration successful. Please complete your company profile.');
+            }
+        }
     }
+
 
     public function showForgotPasswordForm()
     {

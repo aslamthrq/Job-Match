@@ -1,5 +1,5 @@
 <div class="flex p-1 items-center bg-white border border-gray-200 rounded-lg shadow h-44 flex-row hover:bg-gray-100">
-    <img class="rounded-lg object-cover h-full w-28" src="https://i.pinimg.com/474x/49/f6/c2/49f6c217ed44069306d93bf30134f924.jpg" alt="">
+   
     <div class=" p-2 flex-grow">
         <a href="{{ route('dashboard.recruiter.selectionRoom/001') }}">
             <div class="text-base font-bold">Marketing Manager</div>
