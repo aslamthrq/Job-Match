@@ -14,6 +14,9 @@ class rooms extends Model
         'years_of_experience_criteria', 'total_open_position', 'salary', 'dateline', 'access_rights',
         'work_system', 'working_hours'
     ];
+    protected $casts = [
+        'deadline' => 'datetime',
+    ];
 
     public function company()
     {

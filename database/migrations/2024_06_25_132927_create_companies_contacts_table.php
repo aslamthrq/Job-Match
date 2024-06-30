@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('companies_contacts', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id');
-            $table->string('email', 255);
+            $table->string('email', 255)->nullable();
             $table->string('telephone', 255)->nullable();
             $table->string('fax', 255)->nullable();
             $table->string('instagram', 255)->nullable();
-            $table->string('facebook', 255)->nullable();
+            $table->string('linkedin', 255)->nullable();
             $table->string('whatsapp', 255)->nullable();
             $table->timestamps();
 

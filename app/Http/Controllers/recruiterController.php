@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\companies;
+use App\Models\companies_type;
 use App\Models\company_user;
 use App\Models\path_types;
 use Illuminate\Http\Request;
@@ -79,28 +80,67 @@ class recruiterController extends Controller
         return response()->json(['message' => 'Company created and joined successfully'], 201);
     }
 
-    
+
 
     public function companyProfile()
     {
         // Ambil user yang sedang login
         $user = Auth::user();
-        // dd($user->id);
 
+        $companyTypes = companies_type::all();
 
         // Ambil data perusahaan yang terkait dengan user yang sedang login
         $companyUser = $user->companyUser()->first();
-        // dd($companyUser);
 
         if (!$companyUser) {
             return redirect()->back()->with('error', 'Company profile not found.');
         }
 
         $company = $companyUser->company;
+        // dd($company->contact);
 
-        // Kirim data perusahaan ke view
-        return view('recruiter.companyProfile', compact('company'));
+        // Ambil data kontak perusahaan yang terkait
+        $companyContact = $company->contact;
+        // dd($companyContact);
+
+        // Kirim data perusahaan dan data kontak ke view
+        return view('recruiter.companyProfile', compact('company', 'companyTypes', 'companyContact'));
     }
+
+    public function updateCompanyProfile(Request $request)
+    {
+        // dd($request->all());
+        $user = Auth::user();
+
+        // Ambil data perusahaan yang terkait dengan user yang sedang login
+        $companyUser = $user->companyUser()->first();
+        $company = $companyUser->company;
+
+        // Update data perusahaan
+        $company->update([
+            'company_name' => $request->company_name,
+            'company_address' => $request->company_address,
+            'company_website' => $request->website,
+            'company_type' => $request->company_type,
+            'company_motto' => $request->company_motto,
+            'company_description' => $request->description,
+        ]);
+
+        // Update data kontak perusahaan
+        $company->contact()->update([
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+            'fax' => $request->fax,
+            'instagram' => $request->instagram,
+            'linkedin' => $request->linkedin,
+            'whatsapp' => $request->whatsapp,
+        ]);
+
+        // Pastikan untuk menangani redirect dengan pesan sukses atau error jika perlu
+        return redirect()->back()->with('success', 'Company profile updated successfully.');
+    }
+
+
 
     public function candidate()
     {

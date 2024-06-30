@@ -24,7 +24,7 @@ Route::middleware('guest')->group(function () {
 
     // Route untuk identitas perusahaan
     Route::get('/companyForm/{id}', [AuthController::class, 'showCompanyIdentityForm'])->name('showCompanyIdentityForm');
-    Route::post('/companyForm/{id}', [AuthController::class, 'updateCompany'])->name('updateCompany');
+    Route::post('/companyForm/{id}', [AuthController::class, 'RegisterCompany'])->name('RegisterCompany');
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -47,6 +47,8 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('recruiter')->middleware('role:recruiter')->group(function () {
         Route::get('/', [RecruiterController::class, 'index'])->name('dashboard.recruiter');
         Route::get('/companyProfile', [RecruiterController::class, 'companyProfile'])->name('dashboard.recruiter.companyProfile');
+        Route::post('/companyProfile', [RecruiterController::class, 'updateCompanyProfile'])->name('dashboard.recruiter.updateCompanyProfile');
+
         Route::get('/companySettings', [recruiterController::class, 'companySettings'])->name('dashboard.recruiter.companySettings');
 
         Route::get('/selectionRoom', [RoomController::class, 'selectionRoom'])->name('dashboard.recruiter.selectionRoom');

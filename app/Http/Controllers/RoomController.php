@@ -10,35 +10,41 @@ class RoomController extends Controller
 {
     public function selectionRoom()
     {
-        $pathTypes = path_types::all();
-        return view('recruiter.postRoom', compact('pathTypes'));
+        // Ambil user yang sedang login
+        $user = auth()->user();
+
+        // Ambil ID company dari user yang sedang login
+        $company_id = $user->companyUser->company_id;
+
+        // Ambil semua room yang terkait dengan company
+        $rooms = rooms::where('company_id', $company_id)->get();
+
+        // Return view dengan data rooms
+        return view('recruiter.postRoom', compact('rooms'));
     }
 
     // Method untuk menyimpan data room baru
     public function store(Request $request)
     {
-
-        // Validasi data input
-        $validatedData = $request->all();
-        // dd($validatedData);
+        $roomInput = $request->all();
+        // dd($roomInput);
 
 
-        // Simpan data ke dalam database
         $room = new rooms();
         $room->company_id = auth()->user()->companyUser->company_id; // Ambil ID perusahaan dari pengguna yang sedang login
-        $room->position_name = $validatedData['position_name'];
-        $room->departement = $validatedData['departement'];
-        $room->years_of_experience_criteria = $validatedData['years_of_experience_criteria'];
-        $room->total_open_position = $validatedData['total_open_position'];
-        $room->salary = $validatedData['salary'];
-        $room->deadline = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['deadline']);
-        $room->work_system = $validatedData['work_system'];
-        $room->working_hours = $validatedData['working_hours'];
-        $room->access_rights = $validatedData['access_rights'];
-        $room->description = $validatedData['description'];
-        $room->requirements = $validatedData['requirements'];
+        $room->position_name = $roomInput['position_name'];
+        $room->departement = $roomInput['departement'];
+        $room->years_of_experience_criteria = $roomInput['years_of_experience_criteria'];
+        $room->total_open_position = $roomInput['total_open_position'];
+        $room->salary = $roomInput['salary'];
+        $room->deadline = \Carbon\Carbon::createFromFormat('d-m-Y', $roomInput['deadline']);
+        $room->work_system = $roomInput['work_system'];
+        $room->working_hours = $roomInput['working_hours'];
+        $room->access_rights = $roomInput['access_rights'];
+        $room->description = $roomInput['description'];
+        $room->requirements = $roomInput['requirements'];
         $room->save();
-        // Redirect atau berikan respons sesuai kebutuhan aplikasi Anda
+        
         return redirect()->back()->with('success', 'Data lowongan berhasil disimpan.');
     }
 

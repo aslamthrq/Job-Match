@@ -9,10 +9,10 @@ class companies_contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'email', 'telephone', 'fax', 'instagram', 'facebook', 'whatsapp'];
+    protected $fillable = ['company_id', 'email', 'telephone', 'fax', 'instagram', 'linkedin', 'whatsapp'];
 
     public function company()
     {
-        return $this->belongsTo(companies::class);
+        return $this->belongsTo(companies::class, 'company_id');
     }
 }

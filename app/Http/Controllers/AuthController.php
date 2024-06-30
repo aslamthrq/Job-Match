@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\candidates;
 use App\Models\companies;
+use App\Models\companies_contact;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
@@ -44,6 +45,17 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
+
+        // Cek apakah email sudah terdaftar
+        $userExists = DB::table('users')
+            ->where('email', $request->email)
+            ->exists();
+
+        if (!$userExists) {
+            return redirect('/login')
+                ->withErrors('Email belum terdaftar')
+                ->withInput();
+        }
 
         if (Auth::attempt($infoLogin)) {
             $user = Auth::user();
@@ -126,7 +138,7 @@ class AuthController extends Controller
         return view('auth.registerCompanyProfile');
     }
 
-    public function updateCompany(Request $request, $id)
+    public function RegisterCompany(Request $request, $id)
     {
         // Validasi input
         $validatedData = $request->validate([
@@ -138,7 +150,7 @@ class AuthController extends Controller
         // Cari data company berdasarkan ID
         $company = companies::findOrFail($id);
 
-        // Update data company
+        // Register/Update data company
         $company->company_name = $validatedData['floating_company_name'];
         $company->company_address = $validatedData['floating_address'];
         $company->company_description = $validatedData['floating_description'];
@@ -210,6 +222,10 @@ class AuthController extends Controller
                         $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
                         $company->save();
 
+                        $company_contact = new companies_contact();
+                        $company_contact->company_id = $company->id;
+                        $company_contact->save();
+
                         // Associate user with the newly created company
                         $user->companyUser()->create([
                             'company_id' => $company->id,
@@ -256,6 +272,10 @@ class AuthController extends Controller
                 $company = new companies();
                 $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
                 $company->save();
+
+                $company_contact = new companies_contact();
+                $company_contact->company_id = $company->id;
+                $company_contact->save();
 
                 // Associate user with the newly created company
                 $user->companyUser()->create([

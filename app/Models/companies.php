@@ -9,11 +9,11 @@ class companies extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_name', 'company_address', 'company_website'];
+    protected $fillable = ['company_name', 'company_address', 'company_type', 'company_website', 'company_motto', 'company_description'];
 
-    public function contacts()
+    public function contact()
     {
-        return $this->hasMany(companies_contact::class);
+        return $this->hasOne(companies_contact::class, 'company_id');
     }
 
     public function cultures()
