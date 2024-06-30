@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\candidatesController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\recruiterController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -16,9 +17,12 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->middleware('save.selected.tab');
 
-    Route::get('/identityForm/{username}', [AuthController::class, 'showIdentityForm'])->name('identityForm');
-    Route::post('/identityForm/{username}', [AuthController::class, 'lengkapiProfil']);
 
+    // Route untuk identitas peserta
+    Route::get('/identityForm/{username}', [AuthController::class, 'showIdentityForm'])->name('identityForm');
+    Route::post('/identityForm/{username}', [AuthController::class, 'lengkapiProfil'])->name('updateIdentity');
+
+    // Route untuk identitas perusahaan
     Route::get('/companyForm/{id}', [AuthController::class, 'showCompanyIdentityForm'])->name('showCompanyIdentityForm');
     Route::post('/companyForm/{id}', [AuthController::class, 'updateCompany'])->name('updateCompany');
 });
@@ -42,11 +46,14 @@ Route::prefix('dashboard')->group(function () {
     // Recruiter routes
     Route::prefix('recruiter')->middleware('role:recruiter')->group(function () {
         Route::get('/', [RecruiterController::class, 'index'])->name('dashboard.recruiter');
-        Route::get('/profile', [RecruiterController::class, 'showProfile'])->name('dashboard.recruiter.showProfile');
         Route::get('/companyProfile', [RecruiterController::class, 'companyProfile'])->name('dashboard.recruiter.companyProfile');
         Route::get('/companySettings', [recruiterController::class, 'companySettings'])->name('dashboard.recruiter.companySettings');
-        Route::get('/selectionRoom', [recruiterController::class, 'selectionRoom'])->name('dashboard.recruiter.selectionRoom');
-        Route::get('/selectionRoom/001', [recruiterController::class, 'selectionRoomDetail'])->name('dashboard.recruiter.selectionRoom/001');
+
+        Route::get('/selectionRoom', [RoomController::class, 'selectionRoom'])->name('dashboard.recruiter.selectionRoom');
+        Route::post('/selectionRoom', [RoomController::class, 'store'])->name('dashboard.recruiter.selectionRoom.store');
+
+
+        Route::get('/selectionRoom/001', [RoomController::class, 'selectionRoomDetail'])->name('dashboard.recruiter.selectionRoom/001');
         Route::get('/candidate', [recruiterController::class, 'candidate'])->name('dashboard.recruiter.candidate');
 
         // Join or Create Company routes

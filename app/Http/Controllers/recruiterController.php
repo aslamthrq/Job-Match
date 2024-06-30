@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\companies;
 use App\Models\company_user;
+use App\Models\path_types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -78,18 +79,29 @@ class recruiterController extends Controller
         return response()->json(['message' => 'Company created and joined successfully'], 201);
     }
 
-    public function selectionRoom()
-    {
-        return view('recruiter.postRoom');
-    }
-    public function selectionRoomDetail()
-    {
-        return view('recruiter.postRoomDetail');
-    }
+    
+
     public function companyProfile()
     {
-        return view('recruiter.companyProfile');
+        // Ambil user yang sedang login
+        $user = Auth::user();
+        // dd($user->id);
+
+
+        // Ambil data perusahaan yang terkait dengan user yang sedang login
+        $companyUser = $user->companyUser()->first();
+        // dd($companyUser);
+
+        if (!$companyUser) {
+            return redirect()->back()->with('error', 'Company profile not found.');
+        }
+
+        $company = $companyUser->company;
+
+        // Kirim data perusahaan ke view
+        return view('recruiter.companyProfile', compact('company'));
     }
+
     public function candidate()
     {
         return view('recruiter.talentPool');

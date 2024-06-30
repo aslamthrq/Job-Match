@@ -25,7 +25,7 @@ return new class extends Migration
             $table->datetime('deadline');
             $table->enum('access_rights', ['public', 'private'])->default('public');
             $table->enum('work_system', ['WFO', 'Hybrid', 'WFH'])->default('WFO');
-            $table->enum('working_hours', ['fulltime', 'magang', 'partime'])->default('fulltime');
+            $table->enum('working_hours', ['full time', 'magang', 'part time'])->default('full time');
             $table->timestamps();
 
             // Foreign key

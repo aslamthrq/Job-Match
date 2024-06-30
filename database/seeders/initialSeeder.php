@@ -17,6 +17,7 @@ class initialSeeder extends Seeder
             CompaniesTypeSeeder::class,
             PathTypesSeeder::class,
             UsersTableSeeder::class,
+            benefit_table::class,
         ]);
     }
 }

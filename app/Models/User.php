@@ -42,9 +42,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(candidates::class);
     }
+
+    // Model User
     public function companyUser()
     {
-        return $this->hasOne(company_user::class);
+        return $this->hasOne(company_user::class, 'user_id', 'id');
     }
 
 

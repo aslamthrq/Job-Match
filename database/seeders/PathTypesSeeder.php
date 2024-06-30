@@ -15,8 +15,8 @@ class PathTypesSeeder extends Seeder
     {
         // Data jenis-jenis path yang akan di-seed
         $types = [
-            ['type_name' => 'Pemberkasan'],
-            ['type_name' => 'Meeting_Invitation'],
+            ['type_name' => 'uploudBerkas'],
+            ['type_name' => 'meetInvitation'],
             ['type_name' => 'Challange'],
         ];
 

@@ -41,7 +41,7 @@
             </a>
          </li>
       </ul>
-      <ul class=" mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+      {{-- <ul class=" mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
          <li>
             <a href="{{ route('dashboard.recruiter.showProfile') }}" class="{{ (Route::is('dashboard.recruiter.showProfile'))? 'bg-e73002' : '' }} flex items-center p-3 m-4 rounded-lg dark:text-white hover:bg-e73002 dark:hover:bg-gray-700 group">
                   <svg class="{{ (Route::is('dashboard.recruiter.showProfile'))? 'text-white' : '' }} flex-shrink-0 w-6 h-6 text-abu-abu transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@
                <span class="{{ (Route::is('dashboard.recruiter.showProfile'))? 'text-white' : '' }} ms-3 font-poppins font-semibold text-abu-abu group-hover:text-white text-lg">Profile</span>
             </a>
          </li>
-      </ul>
+      </ul> --}}
       <ul class=" mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
          <li>
             <a href="{{ route('dashboard.recruiter.companyProfile') }}" class="{{ (Route::is('dashboard.recruiter.companyProfile'))? 'bg-e73002' : '' }} flex items-center p-3 m-4 rounded-lg dark:text-white hover:bg-e73002 dark:hover:bg-gray-700 group">

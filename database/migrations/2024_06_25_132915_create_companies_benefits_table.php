@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('companies_benefits', function (Blueprint $table) {
             $table->increments('id');
             $table->string('benefit');
-            $table->string('svg')->nullable();
+            $table->string('svg', 1000)->nullable();
             $table->timestamps(); // Tambahkan kolom created_at dan updated_at
         });
     }

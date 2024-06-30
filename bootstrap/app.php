@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\RegisterMiddleware;
 use App\Http\Middleware\SaveSelectedTabMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
