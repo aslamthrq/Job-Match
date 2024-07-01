@@ -9,7 +9,7 @@ class candidates extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'full_name', 'bio', 'address', 'skills', 'experience'];
+    protected $fillable = ['user_id', 'full_name', 'photo_path', 'bio', 'address', 'headline', 'skills', 'experience'];
 
     public function user()
     {
@@ -34,5 +34,10 @@ class candidates extends Model
     public function experiences()
     {
         return $this->belongsToMany(traces_of_experience::class, 'pivot_candidate_experiences');
+    }
+    // Relasi dengan model CandidateContact
+    public function contact()
+    {
+        return $this->hasOne(candidate_contact::class, 'candidate_id');
     }
 }

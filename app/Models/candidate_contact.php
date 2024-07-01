@@ -9,7 +9,7 @@ class candidate_contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['candidate_id', 'email', 'telephone', 'instagram', 'linkedin', 'facebook', 'whatsapp'];
+    protected $fillable = ['candidate_id', 'email', 'website', 'telephone', 'instagram', 'linkedin', 'facebook', 'whatsapp'];
 
     public function candidate()
     {

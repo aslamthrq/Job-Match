@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
             $table->string('email')->notNull();
             $table->string('telephone')->nullable();
+            $table->string('website')->nullable();
             $table->string('instagram')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('facebook')->nullable();

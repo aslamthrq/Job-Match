@@ -38,6 +38,9 @@ Route::prefix('dashboard')->group(function () {
     Route::prefix('kandidat')->middleware('role:participant')->group(function () {
         Route::get('/', [CandidatesController::class, 'index'])->name('dashboard.kandidat');
         Route::get('/profile', [CandidatesController::class, 'showProfile'])->name('dashboard.kandidat.showProfile');
+        Route::post('/profile', [CandidatesController::class, 'updateProfile'])->name('dashboard.kandidat.updateProfile');
+        Route::post('/profile/update-photo', [CandidatesController::class, 'updatePhoto'])->name('dashboard.kandidat.updatePhoto');
+
         Route::get('/lowongan', [CandidatesController::class, 'lowongan'])->name('dashboard.kandidat.lowongan');
         Route::get('/status', [CandidatesController::class, 'status'])->name('dashboard.kandidat.status');
         Route::get('/statusDetail', [CandidatesController::class, 'statusDetail'])->name('dashboard.kandidat.statusDetail');

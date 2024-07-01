@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('full_name', 255)->nullable();
+            $table->string('headline', 255)->nullable();
             $table->text('bio')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('skills', 255)->nullable();

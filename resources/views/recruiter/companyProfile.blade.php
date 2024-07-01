@@ -36,20 +36,20 @@
 
         <div class="border rounded-lg" >
 
-        <!-- Banner Section -->
-        <div class="relative">
-            <form action="{{ route('dashboard.company-profile.update-banner') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <img id="banner-image" src="{{ $company->banner ? asset('storage/' . $company->banner) : asset('images/banner-empty.png') }}" alt="Banner Image - {{ $company->company_name }}" class="w-full rounded-t-lg h-48 object-cover">
-                <label for="banner-file" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer">
-                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                    </svg>
-                    <span class="sr-only">Edit Banner</span>
-                    <input id="banner-file" type="file" name="banner" class="hidden" accept="image/*" onchange="this.form.submit()">
-                </label>
-            </form>
-        </div>
+            <!-- Banner Section -->
+            <div class="relative">
+                <form action="{{ route('dashboard.company-profile.update-banner') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <img id="banner-image" src="{{ $company->banner ? asset('storage/' . $company->banner) : asset('images/banner-empty.png') }}" alt="Banner Image - {{ $company->company_name }}" class="w-full rounded-t-lg h-48 object-cover">
+                    <label for="banner-file" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                        </svg>
+                        <span class="sr-only">Edit Banner</span>
+                        <input id="banner-file" type="file" name="banner" class="hidden" accept="image/*" onchange="this.form.submit()">
+                    </label>
+                </form>
+            </div>
 
          
 
@@ -383,7 +383,7 @@
                     </div>
                     
                 </div>
-                <div class="flex items-center py-8">
+                <div class="flex items-center py-5">
                     <div class="border-b-2 border-gray-300 w-full"></div>
                     <span class="px-3 text-xs font-bold text-gray-500 uppercase">Kontak</span>
                     <div class="border-b-2 border-gray-300 w-full"></div>

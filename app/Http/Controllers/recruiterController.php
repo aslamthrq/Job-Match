@@ -7,6 +7,7 @@ use App\Models\companies_benefit;
 use App\Models\companies_type;
 use App\Models\company_user;
 use App\Models\path_types;
+use App\Models\rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,7 @@ class recruiterController extends Controller
     {
         return view('recruiter.index');
     }
-    
+
     public function showProfile()
     {
         return view('recruiter.profile');
@@ -111,8 +112,11 @@ class recruiterController extends Controller
         $companyContact = $company->contact;
         // dd($companyContact);
 
+        // Ambil semua room yang terkait dengan company
+        $rooms = rooms::where('company_id', $companyUser->company_id)->get();
+
         // Kirim data perusahaan dan data kontak ke view
-        return view('recruiter.companyProfile', compact('company', 'companyTypes', 'companyContact', 'companyBenefitsAll', 'companyBenefits'));
+        return view('recruiter.companyProfile', compact('company', 'companyTypes', 'companyContact', 'companyBenefitsAll', 'companyBenefits', 'rooms'));
     }
 
     public function updateCompanyProfile(Request $request)

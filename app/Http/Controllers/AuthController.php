@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\candidate_contact;
 use App\Models\candidates;
 use App\Models\companies;
 use App\Models\companies_contact;
@@ -100,7 +101,7 @@ class AuthController extends Controller
         $validatedData = $request->validate([
             'floating_first_name' => 'required|string|max:255',
             'floating_last_name' => 'required|string|max:255',
-            'floating_bio' => 'nullable|string',
+            'floating_headline' => 'nullable|string',
             'floating_address' => 'required|string|max:255',
         ]);
 
@@ -124,7 +125,7 @@ class AuthController extends Controller
 
         // Simpan data dari form ke dalam profil Candidate
         $candidate->full_name = $validatedData['floating_first_name'] . ' ' . $validatedData['floating_last_name'];
-        $candidate->bio = $validatedData['floating_bio'];
+        $candidate->headline = $validatedData['floating_headline'];
         $candidate->address = $validatedData['floating_address'];
         // Tambahkan logika untuk menyimpan path foto jika diperlukan
 
@@ -207,6 +208,11 @@ class AuthController extends Controller
                         return redirect()->route('login')->withErrors('Email already registered. Please login.');
                     } else {
                         // If candidate profile is incomplete, redirect to identityForm
+                        $candidate_contact = new candidate_contact();
+                        $candidate_contact->candidate_id = $user->id;
+                        $candidate_contact->email = $user->email;
+                        $candidate_contact->save();
+
                         return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Please complete your profile.');
                     }
                 } elseif ($request->role_id == 3) {
@@ -257,11 +263,16 @@ class AuthController extends Controller
 
             // Create a candidate record for participant role
             if ($request->role_id == 2) {
-                candidates::create([
+                $candidate = candidates::create([
                     'user_id' => $user->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
+
+                $candidate_contact = new candidate_contact();
+                $candidate_contact->candidate_id = $candidate->id;
+                $candidate_contact->email = $user->email;
+                $candidate_contact->save();
 
                 // Redirect to identityForm route with username parameter
                 return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Registration successful. Please complete your profile.');
@@ -287,7 +298,6 @@ class AuthController extends Controller
             }
         }
     }
-
 
     public function showForgotPasswordForm()
     {
