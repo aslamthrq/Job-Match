@@ -51,6 +51,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/company-profile', [RecruiterController::class, 'updateCompanyProfile'])->name('dashboard.recruiter.updateCompanyProfile');
         Route::put('/company-profile/update-logo', [RecruiterController::class, 'updateLogo'])->name('dashboard.company-profile.update-logo');
         Route::post('/company-profile/update-banner', [RecruiterController::class, 'updateBanner'])->name('dashboard.company-profile.update-banner');
+        Route::post('/company-profile/add-benefit', [RecruiterController::class, 'addBenefit'])->name('dashboard.company-profile.add-benefit');
 
 
         Route::get('/companySettings', [recruiterController::class, 'companySettings'])->name('dashboard.recruiter.companySettings');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\companies;
+use App\Models\companies_benefit;
 use App\Models\companies_type;
 use App\Models\company_user;
 use App\Models\path_types;
@@ -17,10 +18,12 @@ class recruiterController extends Controller
     {
         return view('recruiter.index');
     }
+    
     public function showProfile()
     {
         return view('recruiter.profile');
     }
+
     public function joinCompany(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -87,6 +90,7 @@ class recruiterController extends Controller
     {
         // Ambil user yang sedang login
         $user = Auth::user();
+        $companyBenefitsAll = companies_benefit::all();
 
         $companyTypes = companies_type::all();
 
@@ -100,12 +104,15 @@ class recruiterController extends Controller
         $company = $companyUser->company;
         // dd($company->contact);
 
+        // Ambil data manfaat perusahaan berdasarkan perusahaan yang sedang login
+        $companyBenefits = $company->benefits;
+
         // Ambil data kontak perusahaan yang terkait
         $companyContact = $company->contact;
         // dd($companyContact);
 
         // Kirim data perusahaan dan data kontak ke view
-        return view('recruiter.companyProfile', compact('company', 'companyTypes', 'companyContact'));
+        return view('recruiter.companyProfile', compact('company', 'companyTypes', 'companyContact', 'companyBenefitsAll', 'companyBenefits'));
     }
 
     public function updateCompanyProfile(Request $request)
@@ -194,7 +201,7 @@ class recruiterController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('recruiter.companyProfile')->withErrors($validator)->withInput();
+            return redirect()->route('dashboard.recruiter.companyProfile')->withErrors($validator)->withInput();
         }
 
         // Ambil data perusahaan yang terkait dengan user yang sedang login
@@ -222,6 +229,35 @@ class recruiterController extends Controller
 
         // Redirect ke route recruiter.companyProfile dengan pesan kesalahan
         return redirect()->route('dashboard.recruiter.companyProfile')->withErrors('Gagal mengunggah banner perusahaan.');
+    }
+
+    public function addBenefit(Request $request)
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'benefit_id' => 'required|exists:companies_benefits,id',
+            ]);
+
+            // Ambil data perusahaan
+            $company = companies::where('id', auth()->user()->companyUser->company_id)->firstOrFail();
+
+            // Ambil benefit_id dari request
+            $benefitId = $request->input('benefit_id');
+
+            // Periksa apakah manfaat tersebut sudah terkait dengan perusahaan
+            if ($company->benefits()->where('benefit_id', $benefitId)->exists()) {
+                return redirect()->route('dashboard.recruiter.companyProfile')->withErrors('Manfaat perusahaan sudah ada.');
+            }
+
+            // Tambahkan manfaat perusahaan ke dalam pivot table
+            $company->benefits()->attach($benefitId);
+
+            return redirect()->route('dashboard.recruiter.companyProfile')->with('success', 'Manfaat perusahaan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            // Handle errors
+            return redirect()->route('dashboard.recruiter.companyProfile')->withErrors('Gagal menambahkan manfaat perusahaan: ' . $e->getMessage());
+        }
     }
 
     public function companySettings()

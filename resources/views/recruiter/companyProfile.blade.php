@@ -13,6 +13,26 @@
     @include('recruiter.components.sidebar')
      
     <div class="sm:ml-80 p-4">
+        @if($errors->any())
+            @foreach ($errors->all() as $error)
+                
+                <div id="toast-warning" class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
+                        </svg>
+                        <span class="sr-only">Warning icon</span>
+                    </div>
+                    <div class="ms-3 text-sm font-normal">{{ $error }}</div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#toast-warning" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            @endforeach
+        @endif
 
         <div class="border rounded-lg" >
 
@@ -20,7 +40,7 @@
         <div class="relative">
             <form action="{{ route('dashboard.company-profile.update-banner') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <img id="banner-image" src="{{ asset('storage/' . $company->banner) }}" alt="Banner Image - {{ $company->company_name }}" class="w-full rounded-t-lg h-48 object-cover">
+                <img id="banner-image" src="{{ $company->banner ? asset('storage/' . $company->banner) : asset('images/banner-empty.png') }}" alt="Banner Image - {{ $company->company_name }}" class="w-full rounded-t-lg h-48 object-cover">
                 <label for="banner-file" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
@@ -44,7 +64,7 @@
                         <div class="flex col-span-4 items-center justify-center w-full">
                             <label for="dropzone-file" class="relative flex flex-col items-center justify-center w-full h-28 rounded-lg cursor-pointer hover:border-2 hover:border-e73002 bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <img id="profile-image" class="w-28 h-28 object-cover border-2 rounded-lg" src="{{ asset('storage/' . $company->logo) }}" alt="profile image - {{ $company->company_name }}">
+                                    <img id="profile-image" class="w-28 h-28 object-cover border-2 rounded-lg" src="{{ $company->logo ? asset('storage/' . $company->logo) : asset('images/profile-empty.png') }}" alt="profile image - {{ $company->company_name }}">
                                     <div class="absolute inset-0 flex items-center justify-center hover:bg-white hover:bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
                                         <svg class="w-8 h-8 text-negative hover:text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
@@ -168,50 +188,69 @@
                         </p>
                         <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
                             
-                            <div class="flex items-center border rounded-lg p-2">
+                            <button data-modal-target="benefit-modal" data-modal-toggle="benefit-modal" class="flex items-center border-2 border-dashed rounded-lg p-2 bg-gray-50">
                                   <div class="w-8 h-8 text-white bg-white border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center me-2 ">
-                                      <svg class="w-8 h-8 text-e73002"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                                     
+                                      <svg class="w-8 h-8 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
                                       </svg>
                                       
-                                    <span class="sr-only">Competitive Salary</span>
-                                    </div>
-                                  <p class="text-sm font-semibold text-gray-500">Competitive Salary</p>
-                            </div>
-                            <div class="flex items-center border rounded-lg p-2">
-                                  <div class="w-8 h-8 text-white bg-white border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center me-2 ">
-                                      <svg class="w-8 h-8 text-e73002" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 0 1-1.161.886l-.143.048a1.107 1.107 0 0 0-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 0 1-1.652.928l-.679-.906a1.125 1.125 0 0 0-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 0 0-8.862 12.872M12.75 3.031a9 9 0 0 1 6.69 14.036m0 0-.177-.529A2.25 2.25 0 0 0 17.128 15H16.5l-.324-.324a1.453 1.453 0 0 0-2.328.377l-.036.073a1.586 1.586 0 0 1-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 0 1-5.276 3.67m0 0a9 9 0 0 1-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
-                                      </svg>
                                       
-                                    <span class="sr-only">International Exposure</span>
+                                    <span class="sr-only">Add Benefit</span>
                                     </div>
-                                  <p class="text-sm font-semibold text-gray-500">International Exposure</p>
-                            </div>
-                            <div class="flex items-center border rounded-lg p-2">
-                                  <div class="w-8 h-8 text-white bg-white border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center me-2 ">
-                                    <svg class="w-8 h-8 text-e73002" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
-                                      </svg>
-                                    <span class="sr-only">BPJS</span>
+                                  <p class="text-sm font-semibold text-gray-500">Add Benefit</p>
+                            </button>
+                            <!-- Add benefit modal -->
+                            <div id="benefit-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-lg max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                        <!-- Modal header -->
+                                        <div class="flex items-center justify-between p-4 md:p-5">
+                                            <h3 class="text-lg text-gray-500 dark:text-gray-400">
+                                                Benefit perusahaan 
+                                            </h3>
+                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white" data-modal-toggle="benefit-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="px-4 pb-4 md:px-5 md:pb-5">
+                                            
+                                            <form id="formBenefit" class="w-full mx-auto" action="{{ route('dashboard.company-profile.add-benefit') }}" method="POST">
+                                                @csrf
+                                                <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="benefit_id">
+                                                    <option value="" selected disabled>Pilih Benefit</option>
+                                                    @foreach($companyBenefitsAll as $companyBenefit)
+                                                        <option value="{{ $companyBenefit->id }}">{{ $companyBenefit->benefit }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                            
+                                            <button type="submit" form="formBenefit" class="py-2.5 mt-4 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tambah</button>
+                                        </div>
                                     </div>
-                                  <p class="text-sm font-semibold text-gray-500">BPJS</p>
+                                </div>
                             </div>
-                            <div class="flex items-center border rounded-lg p-2">
-                                  <div class="w-8 h-8 text-white bg-white border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center me-2 ">
-                                      <svg class="w-8 h-8 text-e73002" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                      </svg>
-                                      
-                                    <span class="sr-only">THR / Binus System</span>
-                                    </div>
-                                  <p class="text-sm font-semibold text-gray-500">THR / Binus System </p>
-                            </div>
-                            
+
+                            @foreach ($companyBenefits as $benefit)
+                                <div class="flex items-center border rounded-lg p-2">
+                                    <div class="w-8 h-8 text-white bg-white border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center me-2 ">
+                                        {!! $benefit->svg !!}
+                                        
+                                        <span class="sr-only">{{ $benefit->benefit }}</span>
+                                        </div>
+                                    <p class="text-sm font-semibold text-gray-500">{{ $benefit->benefit }}</p>
+                                </div>
+                            @endforeach
+                    
                         </div>
                       </div>
 
-                      <div class="justify-start items-start my-6">
+                      {{-- <div class="justify-start items-start my-6">
                             <p class="mb-2 text-sm font-bold text-gray-500">
                                 Culture:
                             </p>
@@ -266,9 +305,9 @@
                                     </div>  
                                 </div>
                             </div>
-                      </div>
+                      </div> --}}
 
-                      <div class="justify-start items-start my-2 gap-2">
+                      <div class="justify-start items-start my-4 mt-10 gap-2">
                         @include('recruiter.components.jobsTable')
                       </div>
                 
@@ -448,6 +487,7 @@
         </div>
     </div>
 </div>
+
 <script>
     document.getElementById('dropzone-file').addEventListener('change', function() {
         if (this.files && this.files[0]) {

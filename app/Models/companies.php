@@ -28,7 +28,7 @@ class companies extends Model
 
     public function benefits()
     {
-        return $this->belongsToMany(companies_benefit::class, 'pivot_companies_benefits');
+        return $this->belongsToMany(companies_benefit::class, 'pivot_companies_benefits', 'company_id', 'benefit_id'); // Sesuaikan kolom kunci asing yang digunakan
     }
 
     public function users()
