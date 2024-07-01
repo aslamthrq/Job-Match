@@ -15,39 +15,53 @@
     <div class="sm:ml-80 p-4">
 
         <div class="border rounded-lg" >
-            <!-- Banner Section -->
-            <div class="relative">
-                <img src="{{ url('images/banner-job-match.png') }}" alt="Banner Image" class="w-full rounded-t-lg h-48 object-cover">
-                <div class="absolute inset-0 flex items-center rounded-t-lg justify-center">
-                    {{-- <h1 class="text-white text-4xl font-bold">Job Match</h1> --}}
-                    <button type="button" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white  hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center ">
-                      
-                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                          </svg>
-                          
-                        <span class="sr-only">Edit Banner</span>
-                    </button>
-                </div>
-                
-            </div>
+
+        <!-- Banner Section -->
+        <div class="relative">
+            <form action="{{ route('dashboard.company-profile.update-banner') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <img id="banner-image" src="{{ asset('storage/' . $company->banner) }}" alt="Banner Image - {{ $company->company_name }}" class="w-full rounded-t-lg h-48 object-cover">
+                <label for="banner-file" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                    </svg>
+                    <span class="sr-only">Edit Banner</span>
+                    <input id="banner-file" type="file" name="banner" class="hidden" accept="image/*" onchange="this.form.submit()">
+                </label>
+            </form>
+        </div>
+
+         
+
         
             <div class="flex relative">
                 <!-- Profile Image -->
-                <div class="absolute top-0 left-4 transform -translate-y-1/3">
-                    <div class="flex col-span-4 items-center justify-center w-full">
-                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-28 rounded-lg cursor-pointer hover:border-2 hover:border-e73002 bg-gray-50  hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <img class="w-28 h-28 object-cover border-2 rounded-lg" src="{{ url('images/logoJobMatch.png') }}" alt="profile image">
-                            </div>
-                            <input id="dropzone-file" type="file" class="hidden" accept="image/*" />
-                        </label>
+                <form id="logo-upload-form" action="{{ route('dashboard.company-profile.update-logo') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                
+                    <div class="absolute top-0 left-4 transform -translate-y-1/3">
+                        <div class="flex col-span-4 items-center justify-center w-full">
+                            <label for="dropzone-file" class="relative flex flex-col items-center justify-center w-full h-28 rounded-lg cursor-pointer hover:border-2 hover:border-e73002 bg-gray-50 hover:bg-gray-100">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <img id="profile-image" class="w-28 h-28 object-cover border-2 rounded-lg" src="{{ asset('storage/' . $company->logo) }}" alt="profile image - {{ $company->company_name }}">
+                                    <div class="absolute inset-0 flex items-center justify-center hover:bg-white hover:bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                        <svg class="w-8 h-8 text-negative hover:text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
+                                          </svg>
+                                    </div>
+                                </div>
+                                <input id="dropzone-file" type="file" name="logo" class="hidden" accept="image/*" />
+                            </label>
+                        </div>
+                        
+                        
+                        <svg class="top-24 start-24 absolute w-6 h-6 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/>
+                        </svg>
                     </div>
-                    
-                    <svg class="top-24 start-24 absolute w-6 h-6 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
+                </form>
                 
                 <!-- Profile Details and Social Media -->
                 <div class="flex ml-32 w-full items-center justify-between">
@@ -262,7 +276,7 @@
 
 
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    @include('recruiter.components.jobsTable')
+                    @include('components.jobVacancy')
                 </div>
 
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
@@ -434,7 +448,37 @@
         </div>
     </div>
 </div>
- 
+<script>
+    document.getElementById('dropzone-file').addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            var form = document.getElementById('logo-upload-form');
+            var formData = new FormData(form);
+            var fileInput = document.getElementById('dropzone-file');
+            var file = fileInput.files[0];
+            formData.append('logo', file);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', form.action, true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Gambar berhasil diunggah, perbarui tampilan gambar
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profile-image').src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    // Tampilkan pesan error
+                    alert('Upload failed');
+                }
+            };
+
+            xhr.send(formData);
+        }
+    });
+</script>
 
 
 </body>

@@ -46,8 +46,12 @@ Route::prefix('dashboard')->group(function () {
     // Recruiter routes
     Route::prefix('recruiter')->middleware('role:recruiter')->group(function () {
         Route::get('/', [RecruiterController::class, 'index'])->name('dashboard.recruiter');
-        Route::get('/companyProfile', [RecruiterController::class, 'companyProfile'])->name('dashboard.recruiter.companyProfile');
-        Route::post('/companyProfile', [RecruiterController::class, 'updateCompanyProfile'])->name('dashboard.recruiter.updateCompanyProfile');
+
+        Route::get('/company-profile', [RecruiterController::class, 'companyProfile'])->name('dashboard.recruiter.companyProfile');
+        Route::post('/company-profile', [RecruiterController::class, 'updateCompanyProfile'])->name('dashboard.recruiter.updateCompanyProfile');
+        Route::put('/company-profile/update-logo', [RecruiterController::class, 'updateLogo'])->name('dashboard.company-profile.update-logo');
+        Route::post('/company-profile/update-banner', [RecruiterController::class, 'updateBanner'])->name('dashboard.company-profile.update-banner');
+
 
         Route::get('/companySettings', [recruiterController::class, 'companySettings'])->name('dashboard.recruiter.companySettings');
 

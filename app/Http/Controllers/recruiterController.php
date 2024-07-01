@@ -8,6 +8,7 @@ use App\Models\company_user;
 use App\Models\path_types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class recruiterController extends Controller
@@ -146,6 +147,83 @@ class recruiterController extends Controller
     {
         return view('recruiter.talentPool');
     }
+
+    public function updateLogo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = Auth::user();
+
+        // Ambil data perusahaan yang terkait dengan user yang sedang login
+        $companyUser = $user->companyUser()->first();
+        $company = $companyUser->company;
+
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            // Hapus logo lama jika ada
+            if ($company->logo) {
+                Storage::disk('public')->delete($company->logo);
+            }
+
+            $logo = $request->file('logo');
+            $logoPath = $logo->store('logos', 'public');
+
+            // Simpan path logo ke database
+            $company->update([
+                'logo' => $logoPath
+            ]);
+
+            return response()->json(['success' => 'Logo updated successfully.']);
+        }
+
+        return response()->json(['error' => 'Logo upload failed.'], 400);
+    }
+
+
+    public function updateBanner(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'banner' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('recruiter.companyProfile')->withErrors($validator)->withInput();
+        }
+
+        // Ambil data perusahaan yang terkait dengan user yang sedang login
+        $user = Auth::user();
+        $companyUser = $user->companyUser()->first();
+        $company = $companyUser->company;
+
+        // Handle banner upload
+        if ($request->hasFile('banner')) {
+            // Hapus banner lama jika ada
+            if ($company->banner) {
+                Storage::disk('public')->delete($company->banner);
+            }
+
+            $banner = $request->file('banner');
+            $bannerPath = $banner->store('banners', 'public');
+
+            // Simpan path banner ke database
+            $company->banner = $bannerPath;
+            $company->save();
+
+            // Redirect ke route recruiter.companyProfile dengan pesan sukses
+            return redirect()->route('dashboard.recruiter.companyProfile')->with('success', 'Banner perusahaan diperbarui dengan sukses.');
+        }
+
+        // Redirect ke route recruiter.companyProfile dengan pesan kesalahan
+        return redirect()->route('dashboard.recruiter.companyProfile')->withErrors('Gagal mengunggah banner perusahaan.');
+    }
+
     public function companySettings()
     {
         return view('recruiter.settingsProfile');
