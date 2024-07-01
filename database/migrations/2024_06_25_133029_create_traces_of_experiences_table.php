@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('traces_of_experiences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 255);
+            $table->unsignedInteger('candidate_id');
+            // Foreign keys
+            $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
             $table->string('position', 255);
             $table->text('description');
             $table->datetime('year_in')->nullable();

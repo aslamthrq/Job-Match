@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\candidate_contact;
 use App\Models\candidates;
+use App\Models\educational_history;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,12 +23,13 @@ class candidatesController extends Controller
         // Ambil profil kandidat dan data kontaknya
         $profile = $user->candidate;
         $contact = $profile->contact;
+        $educations = $profile->educationalHistories()->orderBy('year_in', 'desc')->orderBy('year_out', 'desc')->get(); // Adjust this based on your relationship
         // dd($contact);
 
         // dd($profile);
         // dd($contact);
 
-        return view('candidates.profile', compact('profile', 'contact'));
+        return view('candidates.profile', compact('profile', 'contact', 'educations'));
     }
 
     // Method untuk upload foto profil
@@ -103,6 +105,38 @@ class candidatesController extends Controller
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+
+    // Method to handle the form submission and add education history
+    public function addEducation(Request $request)
+    {
+        // Validasi input jika diperlukan
+        $request->validate([
+            'institution_name' => 'required|string|max:255',
+            'major' => 'required|string|max:255',
+            'year_in' => 'required|date_format:Y-m-d',
+            'year_out' => 'nullable|date_format:Y-m-d', // year_out boleh null jika masih berlangsung
+        ]);
+
+        // Buat instansi baru dari model EducationalHistory dan simpan ke database
+        $education = new educational_history();
+        $education->candidate_id = auth()->user()->candidate->id; // Mengasumsikan candidate_id terkait dengan user yang sedang login
+        $education->institution_name = $request->input('institution_name');
+        $education->major = $request->input('major');
+        $education->year_in = $request->input('year_in');
+
+        // Periksa apakah pendidikan masih berlangsung
+        if ($request->has('current_education')) {
+            $education->year_out = null; // Set year_out ke null jika masih berlangsung
+        } else {
+            $education->year_out = $request->input('year_out');
+        }
+
+        $education->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Riwayat pendidikan berhasil ditambahkan.');
     }
 
     public function lowongan()

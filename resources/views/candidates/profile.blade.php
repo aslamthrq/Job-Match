@@ -38,6 +38,14 @@
                 </form>
             </div>
             <div class="ps-3">
+                <button data-modal-target="editProfile-modal" data-modal-toggle="editProfile-modal" type="button" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white  hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center ">
+                  
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                      </svg>
+                      
+                    <span class="sr-only">Edit Profile</span>
+                </button>
                 <div class="text-lg font-bold">{{ $profile->full_name }}</div>
                 <div class="font-semibold text-xs text-gray-500">{{ $profile->headline }}</div>
                 <div class="text-xs my-2 text-gray-500">{{ $profile->address }}</div>
@@ -96,15 +104,8 @@
                
         </div>
         <div id="default-tab-content">
-            <div class="relative hidden rounded-lg" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <button data-modal-target="editProfile-modal" data-modal-toggle="editProfile-modal" type="button" class="absolute top-0 right-0 m-2 text-e73002 shadow-lg bg-white  hover:bg-negative hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center ">
-                  
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                      </svg>
-                      
-                    <span class="sr-only">Edit Profile</span>
-                </button>
+            <div class="hidden rounded-lg" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                
                 <div class="min-h-28 justify-start items-start">
                         
                     <p class="text-sm font-bold text-gray-500 dark:text-gray-400">
@@ -113,33 +114,106 @@
                     <p class="text-sm text-gray-500">{{ $profile->bio }}</p>
 
                 </div>
-                <div class="flex flex-col gap-4 justify-center mb-4 rounded dark:bg-gray-800">
+                <div class="flex flex-col gap-2 justify-center rounded">
                     <p class="mb-2 text-sm font-bold text-gray-500">
                         Pendidikan:
                       </p>
-                    <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
+                    <div class="flex p-4 justify-center items-center rounded bg-white shadow-lg border-2 border-dashed">
                       
-                        <div class="ps-3 w-full">
-                            <div class="text-base font-semibold">Universitas Dian Nuswantoro</div>
-                            <div class="font-normal text-gray-500">S1-Teknik Infromatika</div>
+                        <button data-modal-target="education-modal" data-modal-toggle="education-modal" class="ps-3 w-full flex gap-2 justify-center items-center">
+                            <svg class="w-6 h-6 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Click untuk tambah <span class="font-semibold">pendidikan</span></p>
+                        </button>
+
+                        <!-- Add education modal -->
+                        <div id="education-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-lg max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                    <!-- Modal header -->
+                                    <div class="flex items-center justify-between p-4 md:p-5">
+                                        <h3 class="text-lg text-gray-500 dark:text-gray-400">
+                                            Pendidikan
+                                        </h3>
+                                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white" data-modal-toggle="education-modal">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="px-4 pb-4 md:px-5 md:pb-5">
+                                        
+                                        <form action="{{ route('dashboard.kandidat.addEducation') }}" class="p-4 md:p-5 overflow-y-auto flex-grow" method="POST" id="educationCandidate">
+                                            @csrf
+                                            <div class="grid gap-4 grid-cols-4">
+                                              
+                                                <div class="col-span-4">
+                                                    <label for="institution_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Institusi</label>
+                                                    <input type="text" name="institution_name" id="institution_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukan Nama Institusi" value="" required="">
+                                                </div>
+                                                <div class="col-span-2 sm:col-span-4">
+                                                    <label for="major" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jurusan</label>
+                                                    <input type="text" name="major" id="major" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="" placeholder="Masukkan jurusan" >
+                                                </div>
+                                                <div class="col-span-4">
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Rentang waktu</label>
+                                                    <div date-rangepicker datepicker-format="yyyy-mm-dd" class="flex items-center">
+                                                        <div class="relative">
+                                                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <input name="year_in" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Mulai">
+                                                        </div>
+                                                        <span class="mx-4 text-gray-500">to</span>
+                                                        <div class="relative">
+                                                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <input name="year_out" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Selesai">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex items-center mt-2">
+                                                        <input type="checkbox" id="current_education" name="current_education" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                                        <label for="current_education" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Masih Berlangsung</label>
+                                                    </div>
+                                            </div>
+                     
+                                                
+                                            </div>
+                                        </form>
+                                        
+                                        <button type="submit" form="educationCandidate" class="py-2.5 mt-4 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Tambah</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="ps-3 w-full text-right">
-                            <div class="text-base font-semibold ">2021 - Sekarang</div>
-                        </div>                             
+                                                 
                     </div>
-                    <div class="flex p-4 items-center rounded bg-white shadow-lg dark:bg-gray-800">
-                       
-                        <div class="ps-3 w-full">
-                            <div class="text-base font-semibold">SMA N 4 Semarang</div>
-                            <div class="font-normal text-gray-500">MIPA</div>
+
+                     <!-- Iterasi melalui setiap riwayat pendidikan -->
+                     @foreach ($educations as $education)
+                        <div class="flex p-4 items-center rounded bg-white shadow-lg">
+                            <div class="ps-3 w-full">
+                                <div class="text-base font-semibold">{{ $education->institution_name }}</div>
+                                <div class="font-normal text-gray-500">{{ $education->major }}</div>
+                            </div>
+                            <div class="ps-3 w-full text-right">
+                                <div class="text-base font-semibold">{{ date('Y', strtotime($education->year_in)) }} - {{ $education->year_out ? date('Y', strtotime($education->year_out)) : 'Sekarang' }}</div>
+                            </div>
                         </div>
-                        <div class="ps-3 w-full text-right">
-                            <div class="text-base font-semibold ">2018 - 2021</div>
-                        </div>                             
-                    </div>
+                    @endforeach
+
                 </div>
                     {{-- <div class="grid grid-cols-3 gap-4 mb-4">
-                        <div class="p-4 items-center justify-center  rounded bg-white shadow-lg dark:bg-gray-800">
+                        <div class="p-4 items-center justify-center  rounded bg-white shadow-lg">
                             <div class="text-base font-semibold mb-2">Sosial Media</div>
                             <div class="flex">
                                 <div class="relative flex-none me-4">
@@ -159,7 +233,7 @@
                                 <a href="https://www.instagram.com/aslamthrq/" class="font-semibold text-abu-abu">@aslamthrq</a>
                             </div>  
                         </div>
-                        <div class="p-4  items-center justify-center rounded shadow-lg bg-white dark:bg-gray-800">
+                        <div class="p-4  items-center justify-center rounded shadow-lg bg-white">
                             <div class="text-base font-semibold mb-2">Skill</div>                            
                             <div class="flex justify-between mb-1">
                                 <span class="text-base font-medium text-black dark:text-white">Tiduran</span>
@@ -177,7 +251,7 @@
                             </div>
                             
                         </div>
-                        <div class="p-4 items-center justify-center  rounded bg-white shadow-lg dark:bg-gray-800">
+                        <div class="p-4 items-center justify-center  rounded bg-white shadow-lg">
                             <div class="text-base font-semibold mb-2">Languange</div>
                             <div class="flex justify-between mb-1">
                                 <span class="text-base font-medium text-black dark:text-white">Bahasa Inggris</span>
@@ -200,7 +274,7 @@
                 
                 
             </div>
-            <div class="hiddenrounded-lg bg-gray-50 dark:bg-gray-800" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+            <div class="hiddenrounded-lg bg-gray-50" id="experience" role="tabpanel" aria-labelledby="experience-tab">
                 <div class="grid grid-cols-4 gap-4">
                     <div>
                         <a href="#">
@@ -262,7 +336,7 @@
                 </div>
             </div>
 
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+            <div class="hidden p-4 rounded-lg bg-gray-50" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
                 <div class="flex">
                     <div class="relative flex-none me-4">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

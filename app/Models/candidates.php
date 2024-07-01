@@ -26,18 +26,21 @@ class candidates extends Model
         return $this->belongsToMany(Candidates_language::class, 'pivot_candidate_languages');
     }
 
-    public function educationalHistories()
-    {
-        return $this->belongsToMany(educational_history::class, 'pivot_candidate_educations');
-    }
 
     public function experiences()
     {
-        return $this->belongsToMany(traces_of_experience::class, 'pivot_candidate_experiences');
+        return $this->hasMany(traces_of_experience::class, 'candidate_id');
     }
+
     // Relasi dengan model CandidateContact
     public function contact()
     {
         return $this->hasOne(candidate_contact::class, 'candidate_id');
+    }
+
+
+    public function educationalHistories()
+    {
+        return $this->hasMany(educational_history::class, 'candidate_id');
     }
 }

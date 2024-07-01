@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pivot_candidate_educations', function (Blueprint $table) {
-            $table->id();
+        Schema::create('educational_histories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('institution_name', 255);
             $table->unsignedInteger('candidate_id');
-            $table->unsignedInteger('education_id');
-            $table->timestamps();
-
             // Foreign keys
             $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
-            $table->foreign('education_id')->references('id')->on('educational_histories')->onDelete('cascade');
+            $table->string('major', 255);
+            $table->datetime('year_in')->nullable();
+            $table->datetime('year_out')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pivot_candidate_educations');
+        Schema::dropIfExists('educational_histories');
     }
 };

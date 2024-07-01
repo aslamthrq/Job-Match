@@ -9,10 +9,11 @@ class traces_of_experience extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tittle', 'position', 'description', 'year_in', 'year_out'];
+    protected $fillable = ['tittle', 'candidate_id','position', 'description', 'year_in', 'year_out'];
 
-    public function candidates()
+    // Model EducationalHistory
+    public function candidate()
     {
-        return $this->belongsToMany(candidates::class, 'pivot_candidate_experiences');
+        return $this->belongsTo(candidates::class, 'candidate_id');
     }
 }
