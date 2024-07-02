@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\candidate_contact;
 use App\Models\candidates;
 use App\Models\educational_history;
+use App\Models\rooms;
 use App\Models\traces_of_experience;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -175,7 +176,18 @@ class candidatesController extends Controller
 
     public function lowongan()
     {
-        return view('candidates.jobVacancy');
+        // Mengambil semua data rooms beserta data company terkait
+        $rooms = rooms::with('company')->paginate(4);
+
+        // Prepare benefits for all rooms
+        $allBenefits = [];
+        foreach ($rooms as $room) {
+            $company = $room->company;
+            $benefits = $company->benefits; // assuming benefits relation is defined in the Company model
+            $allBenefits[$room->id] = $benefits;
+        }
+        
+        return view('candidates.jobVacancy', compact('rooms', 'allBenefits'));
     }
     public function status()
     {

@@ -7,7 +7,7 @@
                 
                 <div class="text-base items-center flex gap-4 font-bold text-gray-800">
                     <span class="text-lg text-gray-500"> {{ $room->position_name }}</span>
-                    <span class="inline-flex items-center bg-negative text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    <span class="inline-flex items-center bg-negative text-white text-xs font-bold px-2.5 py-0.5 rounded-full">
                         Remote
                     </span>
                 </div>
@@ -30,7 +30,7 @@
             </div> 
             
         </div>
-        <a href="{{ ('login') }}" class="text-white bg-negative hover:bg-negative-hover border font-medium rounded-lg text-sm p-1 text-center inline-flex items-center">
+        <a href="{{ ('login') }}" class="p-2 text-white bg-negative hover:bg-negative-hover border font-medium rounded-lg text-sm text-center inline-flex items-center">
             <span class="text-sm font-semibold text-white">Easy Apply</span>
         </a>
     </div>
@@ -114,7 +114,7 @@
             <p class="text-sm text-gray-500"> {{ $room->requirements }}</p>
 
         </div>
-        <div class="justify-start items-start my-2">
+        <div class="justify-start items-start mt-2">
             <p class="mb-2 text-sm font-bold text-gray-500">
               Benefits:
             </p>

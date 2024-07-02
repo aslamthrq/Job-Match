@@ -62,19 +62,19 @@
                
 
                 <div class="md:flex mt-4">
-                    <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0"  id="jobVacancy-tab" data-tabs-toggle="#jobVacancy-tab-content" role="tablist">
+                    <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500  md:me-4 mb-4 md:mb-0"  id="jobVacancy-tab" data-tabs-toggle="#jobVacancy-tab-content" role="tablist">
                         @foreach ($rooms as $room)
                         <li class="me-2" role="presentation">
                             <button class="inline-flex p-2 bg-slate-100 text-white rounded-lg active w-80 items-center justify-center"  id="jobVacancy{{ $room->id }}-tab" data-tabs-target="#jobVacancy{{ $room->id }}" type="button" role="tab" aria-controls="jobVacancy{{ $room->id }}" aria-selected="false">
                                 <div>
 
                                     <div class="flex">
-                                        <img class="w-16 h-16 border rounded-lg" src="{{ $room->company->logo ? asset('storage/' . $room->company->logo) : asset('images/profile-empty.png') }}" alt="Jese image">
+                                        <img class="w-16 h-16 border rounded-lg object-cover" src="{{ $room->company->logo ? asset('storage/' . $room->company->logo) : asset('images/profile-empty.png') }}" alt="Jese image">
                                         {{-- Keterangan --}}
                                         <div class="ps-3">
                                             <div class="text-base items-center flex gap-4 font-bold text-gray-800">
-                                                <span class="text-xs text-gray-500"> {{ $room->position_name }}</span>
-                                                <span class="inline-flex items-center bg-negative text-white text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                <span class="text-xs text-gray-500 text-left"> {{ $room->position_name }}</span>
+                                                <span class="inline-flex items-center bg-negative text-white text-xs font-semibold px-2 py-0.5 rounded-full">
                                                     {{ $room->work_system }}
                                                 </span>
                                             </div>
@@ -102,11 +102,11 @@
                                     
                                     
                                     <div class="grid grid-cols-2 mt-2 gap-4 items-center justify-center rounded ">
-                                        <div class="flex items-center p-2 rounded bg-fd7d09 dark:bg-gray-800">
-                                           <h1 class=" text-xs font-medium leading-none tracking-tight text-white  dark:text-white">Posisi dibuka<br/> <span class="text-sm font-extrabold text-white dark:text-blue-500">{{ $room->total_open_position }}</span></h1>
+                                        <div class="flex items-center p-1 rounded bg-fd7d09 dark:bg-gray-800">
+                                           <h1 class=" text-xs font-bold leading-none tracking-tight text-white  dark:text-white">Posisi dibuka : <span class="text-xs font-bold text-white dark:text-blue-500">{{ $room->total_open_position }}</span></h1>
                                         </div>
-                                        <div class="flex items-center p-2 rounded bg-fd1d02 dark:bg-gray-800">
-                                           <h1 class=" text-xs font-medium leading-none tracking-tight text-white  dark:text-white">Total Pendaftar<br/> <span class="text-sm font-extrabold text-white dark:text-blue-500">236</span></h1>
+                                        <div class="flex items-center p-1 rounded bg-fd1d02 dark:bg-gray-800">
+                                           <h1 class=" text-xs font-bold leading-none tracking-tight text-white  dark:text-white">Total Pendaftar : <span class="text-xs font-bold text-white dark:text-blue-500">236</span></h1>
                                         </div>
                                      </div>
                                 </div>
