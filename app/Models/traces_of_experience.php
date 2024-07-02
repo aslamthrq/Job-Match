@@ -9,7 +9,7 @@ class traces_of_experience extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tittle', 'candidate_id','position', 'description', 'year_in', 'year_out'];
+    protected $fillable = ['tittle', 'candidate_id', 'position', 'description', 'photo_path', 'year_in', 'year_out'];
 
     // Model EducationalHistory
     public function candidate()

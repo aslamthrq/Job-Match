@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\candidate_contact;
 use App\Models\candidates;
 use App\Models\educational_history;
+use App\Models\traces_of_experience;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,12 +25,13 @@ class candidatesController extends Controller
         $profile = $user->candidate;
         $contact = $profile->contact;
         $educations = $profile->educationalHistories()->orderBy('year_in', 'desc')->orderBy('year_out', 'desc')->get(); // Adjust this based on your relationship
-        // dd($contact);
+        // Ambil semua pengalaman dari database
+        $experiences = traces_of_experience::where('candidate_id', auth()->user()->candidate->id)->get();
 
         // dd($profile);
         // dd($contact);
 
-        return view('candidates.profile', compact('profile', 'contact', 'educations'));
+        return view('candidates.profile', compact('profile', 'contact', 'educations', 'experiences'));
     }
 
     // Method untuk upload foto profil
@@ -137,6 +139,38 @@ class candidatesController extends Controller
 
         // Redirect kembali dengan pesan sukses
         return redirect()->back()->with('success', 'Riwayat pendidikan berhasil ditambahkan.');
+    }
+
+    public function addExperience(Request $request)
+    {
+        // dd($request->all());
+
+        // Buat instansi baru dari model TracesOfExperience dan simpan ke database
+        $experience = new traces_of_experience();
+        $experience->candidate_id = auth()->user()->candidate->id; // Mengasumsikan candidate_id terkait dengan user yang sedang login
+        $experience->title = $request->input('title');
+        $experience->description = $request->input('description');
+        $experience->position = $request->input('position');
+        $experience->year_in = $request->input('year_in');
+
+        // Periksa apakah pengalaman masih berlangsung
+        if ($request->has('current_experience')) {
+            $experience->year_out = null; // Set year_out ke null jika masih berlangsung
+        } else {
+            $experience->year_out = $request->input('year_out');
+        }
+
+        // Proses pengunggahan file gambar jika ada
+        if ($request->hasFile('photo_path')) {
+            $file = $request->file('photo_path');
+            $path = $file->store('images/experiences', 'public'); // Menyimpan di direktori storage/app/public/images/experiences
+            $experience->photo_path = $path;
+        }
+
+        $experience->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Riwayat pengalaman berhasil ditambahkan.');
     }
 
     public function lowongan()

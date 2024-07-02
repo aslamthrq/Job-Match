@@ -95,7 +95,7 @@
                     <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
                 </li>
                 <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="experience-tab" data-tabs-target="#experience" type="button" role="tab" aria-controls="experience" aria-selected="false">Experience</button>
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="experience-tab" data-tabs-target="#experience" type="button" role="tab" aria-controls="experience" aria-selected="true">Experience</button>
                 </li>
                 <li role="presentation">
                     <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
@@ -275,63 +275,125 @@
                 
             </div>
             <div class="hiddenrounded-lg bg-gray-50" id="experience" role="tabpanel" aria-labelledby="experience-tab">
-                <div class="grid grid-cols-4 gap-4">
+             
+                
+                <div class="p-2 bg-slate-100 border-2 border-dashed border-gray-200 rounded-lg shadow w-64">
+                    <button data-modal-target="experience-modal" data-modal-toggle="experience-modal" class=" w-full flex gap-2 justify-center items-center">
+                        <svg class="w-6 h-6 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Tambah<span class="font-semibold">experience</span></p>
+                    </button>
+                </div>
+                <!-- Add xperience modal -->
+                <div id="experience-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-lg max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5">
+                            <h3 class="text-lg text-gray-500 dark:text-gray-400">
+                                Experience
+                            </h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white" data-modal-toggle="experience-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="px-4 pb-4 md:px-5 md:pb-5">
+                            
+                            <form action="{{ route('dashboard.kandidat.addExperience') }}" class="p-4 md:p-5 overflow-y-auto flex-grow" method="POST" id="experienceCandidate" enctype="multipart/form-data">
+                                @csrf
+                                <div class="grid gap-4 grid-cols-4">
+                                    <div class="flex col-span-4 items-center justify-center w-full">
+                                        <label for="photo_path" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                </svg>
+                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                            </div>
+                                            <input id="photo_path" name="photo_path" type="file" class="hidden" />
+                                        </label>
+                                    </div> 
+                                    <div class="col-span-2">
+                                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                                        <input type="text" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukan tittle" value="" required="">
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-2">
+                                        <label for="position" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Posisi</label>
+                                        <input type="text" name="position" id="position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="" placeholder="Masukkan jurusan" >
+                                    </div>
+
+                                    <div class="col-span-4">
+                                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                                        <textarea id="description" name="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis deskripsi dan kualifikasi"></textarea>                    
+                                    </div>
+
+                                    <div class="col-span-4">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Rentang waktu</label>
+                                        <div date-rangepicker datepicker-format="yyyy-mm-dd" class="flex items-center">
+                                            <div class="relative">
+                                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                                </svg>
+                                            </div>
+                                            <input name="year_in" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Mulai">
+                                            </div>
+                                            <span class="mx-4 text-gray-500">to</span>
+                                            <div class="relative">
+                                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                                </svg>
+                                            </div>
+                                            <input name="year_out" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Selesai">
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center mt-2">
+                                            <input type="checkbox" id="current_experience" name="current_experience" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                            <label for="current_experience" class="ml-2 text-sm text-gray-700 dark:text-gray-300">Masih Berlangsung</label>
+                                        </div>
+                                </div>
+            
+                                    
+                                </div>
+                            </form>
+                            
+                            <button type="submit" form="experienceCandidate" class="py-2.5 mt-4 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 ">Tambah</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                <div class="grid grid-cols-4 gap-4 mt-5">
+                    
+                    @foreach($experiences as $experience)
                     <div>
                         <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQGoQfDjHJaIsQ/feedshare-shrink_2048_1536/0/1706456185534?e=1721865600&v=beta&t=vh73LL1UQBanZMOdyD9WzfwmtMwPeq1-yBocDa1JD70" alt="" />
+                            <img class="rounded-lg mb-2 w-full h-40 object-cover" src="{{ asset('storage/' . $experience->photo_path) }}" alt="{{ $experience->title }}" />
                         </a>
                         <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
                             <a href="#">
-                                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Nama perusahaan</h5>
-                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">Posisi</h6>
+                                <h5 class="text-lg font-bold text-gray-900 dark:text-white">{{ $experience->title }}</h5>
+                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">{{ $experience->position }}</h6>
                             </a>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tulis tentang pencapaian, keberhasilan, dan kontribusi Anda terhadap perusahaan ini.</p>
-                            <h6 class="mb-2 text-base text-abu-abu dark:text-white">2021-2022</h6>
-
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $experience->description }}</p>
+                            <h6 class="mb-2 text-base text-abu-abu dark:text-white">
+                                {{ \Carbon\Carbon::parse($experience->year_in)->format('M Y') }} - 
+                                {{ $experience->year_out ? \Carbon\Carbon::parse($experience->year_out)->format('M Y') : 'Present' }}
+                            </h6>
                         </div>
                     </div>
-                    <div>
-                        <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D5622AQFvXlyNopB19g/feedshare-shrink_2048_1536/0/1706456134681?e=1721865600&v=beta&t=IwiFhmMmYVqWHZ-aEAd7oiDYEjoDtyk4o9EgBhvU_30" alt="" />
-                        </a>
-                        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
-                            <a href="#">
-                                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Nama perusahaan</h5>
-                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">Posisi</h6>
-                            </a>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tulis tentang pencapaian, keberhasilan, dan kontribusi Anda terhadap perusahaan ini.</p>
-                            <h6 class="mb-2 text-base text-abu-abu dark:text-white">2021-2022</h6>
-
-                        </div>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQEtFoWq4_wg4Q/profile-treasury-image-shrink_800_800/0/1680828757802?e=1719849600&v=beta&t=BD_a4Bva7ETT7b0qGEaT5vBie1RIn5SUAEP2cMLvpDQ" alt="" />
-                        </a>
-                        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
-                            <a href="#">
-                                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Nama perusahaan</h5>
-                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">Posisi</h6>
-                            </a>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tulis tentang pencapaian, keberhasilan, dan kontribusi Anda terhadap perusahaan ini.</p>
-                            <h6 class="mb-2 text-base text-abu-abu dark:text-white">2021-2022</h6>
-
-                        </div>
-                    </div>
-                    <div>
-                        <a href="#">
-                            <img class="rounded-lg mb-2 w-64 h-40 object-cover" src="https://media.licdn.com/dms/image/D562DAQGV2Yvij34P9g/profile-treasury-image-shrink_8192_8192/0/1680872378166?e=1719849600&v=beta&t=wqSOOzLFZQK4eE4sS4fpH6xzT0yZBPPyEiPZOIdxclk" alt="" />
-                        </a>
-                        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
-                            <a href="#">
-                                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Nama perusahaan</h5>
-                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">Posisi</h6>
-                            </a>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Tulis tentang pencapaian, keberhasilan, dan kontribusi Anda terhadap perusahaan ini.</p>
-                            <h6 class="mb-2 text-base text-abu-abu dark:text-white">2021-2022</h6>
-
-                        </div>
-                    </div>
+                    @endforeach
+                    
 
                 </div>
             </div>

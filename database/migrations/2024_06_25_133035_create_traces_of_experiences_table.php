@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('traces_of_experiences', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 255);
+            $table->string('photo_path', 255)->nullable();
             $table->unsignedInteger('candidate_id');
             // Foreign keys
             $table->foreign('candidate_id')->references('id')->on('candidates')->onDelete('cascade');
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->datetime('year_in')->nullable();
             $table->datetime('year_out')->nullable();
             $table->timestamps();
-
         });
     }
 
