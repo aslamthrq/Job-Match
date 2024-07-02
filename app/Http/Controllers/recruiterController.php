@@ -15,6 +15,17 @@ use Illuminate\Support\Facades\Validator;
 
 class recruiterController extends Controller
 {
+
+    public function showSelectionPathTesting()
+    {
+        return view('recruiter.SelectionPathTesting');
+    }
+    public function selectionPathTesting(Request $request)
+    {
+        dd($request->all());
+        return view('recruiter.SelectionPathTesting');
+    }
+
     public function index()
     {
         return view('recruiter.index');

@@ -74,8 +74,9 @@
         
         <main class="main-wrapper relative overflow-hidden">
             @include('components.jobVacancy')
-           
+            
         </main>
+       
 
         
 

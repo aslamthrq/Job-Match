@@ -10,7 +10,7 @@
      
  <div class="sm:ml-80 p-4">
     <div class="border rounded-lg" >
-        <div class="flex p-4 mb-6 rounded-lg">
+        <div class="flex p-4 rounded-lg">
             <div class="relative">
                 <!-- Profile Image -->
                 <form action="{{ route('dashboard.kandidat.updatePhoto') }}" method="POST" enctype="multipart/form-data" id="profile-form">
@@ -90,15 +90,15 @@
 
     <div class="px-8 pb-8 shadow-lg rounded-lg ">
         <div class="mb-4 border-b border-gray-200 ">
-            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-e73002" id="default-tab" data-tabs-active-classes="text-e73002 border-e73002" data-tabs-toggle="#default-tab-content" role="tablist">
                 <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                    <button class="inline-block p-4 hover:border-e73002 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
                 </li>
                 <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="experience-tab" data-tabs-target="#experience" type="button" role="tab" aria-controls="experience" aria-selected="true">Experience</button>
+                    <button class="inline-block p-4 hover:border-e73002 border-b-2 rounded-t-lg" id="experience-tab" data-tabs-target="#experience" type="button" role="tab" aria-controls="experience" aria-selected="false">Experience</button>
                 </li>
                 <li role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
+                    <button class="inline-block p-4 hover:border-e73002 border-b-2 rounded-t-lg " id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
                 </li>
             </ul>
                
@@ -114,7 +114,39 @@
                     <p class="text-sm text-gray-500">{{ $profile->bio }}</p>
 
                 </div>
+
                 <div class="flex flex-col gap-2 justify-center rounded">
+                    <p class="mb-2 text-sm font-bold text-gray-500">
+                        Last Experience:
+                      </p>
+                   
+                      <div class="grid grid-cols-4 gap-4 ">
+                    
+                        @foreach($experiences->slice(0, 4) as $experience)
+                        <div>
+                            <a href="#">
+                                <img class="rounded-lg mb-2 w-full h-40 object-cover" src="{{ asset('storage/' . $experience->photo_path) }}" alt="{{ $experience->title }}" />
+                            </a>
+                            <div class="p-5 bg-white border border-gray-200 rounded-lg shadow">
+                                <a href="#">
+                                    <h5 class="text-lg font-bold text-gray-900 dark:text-white">{{ $experience->title }}</h5>
+                                    <h6 class="mb-2 text-base text-abu-abu dark:text-white">{{ $experience->position }}</h6>
+                                </a>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $experience->description }}</p>
+                                <h6 class="mb-2 text-base text-abu-abu dark:text-white">
+                                    {{ \Carbon\Carbon::parse($experience->year_in)->format('M Y') }} - 
+                                    {{ $experience->year_out ? \Carbon\Carbon::parse($experience->year_out)->format('M Y') : 'Present' }}
+                                </h6>
+                            </div>
+                        </div>
+                        @endforeach
+                        
+    
+                    </div>
+
+                </div>
+
+                <div class="flex flex-col gap-2 mt-4 justify-center rounded">
                     <p class="mb-2 text-sm font-bold text-gray-500">
                         Pendidikan:
                       </p>
@@ -282,7 +314,7 @@
                         <svg class="w-6 h-6 text-e73002" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clip-rule="evenodd"/>
                         </svg>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">Tambah<span class="font-semibold">experience</span></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Tambah <span class="font-semibold">experience</span></p>
                     </button>
                 </div>
                 <!-- Add xperience modal -->
@@ -399,7 +431,28 @@
             </div>
 
             <div class="hidden p-4 rounded-lg bg-gray-50" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                <div class="flex">
+              
+                   
+                      <h3 class="text-2xl font-semibold mb-4">Contact Form</h3>
+                  
+                      <form action="#" class="space-y-4" data-form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <input type="text" name="fullname" class="form-input border border-gray-300 p-2 rounded-lg w-full" placeholder="Full name" required data-form-input>
+                          <input type="email" name="email" class="form-input border border-gray-300 p-2 rounded-lg w-full" placeholder="Email address" required data-form-input>
+                        </div>
+                  
+                        <textarea name="message" class="form-input border border-gray-300 p-2 rounded-lg w-full h-32" placeholder="Your Message" required data-form-input></textarea>
+                  
+                        <button  type="sumbit" class="gap-2 bg-merah text-merah border border-merah hover:bg-abu-abu hover:text-white font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center ">
+                            
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2a1 1 0 0 1 .932.638l7 18a1 1 0 0 1-1.326 1.281L13 19.517V13a1 1 0 1 0-2 0v6.517l-5.606 2.402a1 1 0 0 1-1.326-1.281l7-18A1 1 0 0 1 12 2Z" clip-rule="evenodd"/>
+                              </svg>                               
+                            Send Message
+                        </button>
+                      </form>
+        
+                {{-- <div class="flex">
                     <div class="relative flex-none me-4">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path fill="currentColor" fill-rule="evenodd" d="M12 4a8 8 0 0 0-6.895 12.06l.569.718-.697 2.359 2.32-.648.379.243A8 8 0 1 0 12 4ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.96 9.96 0 0 1-5.016-1.347l-4.948 1.382 1.426-4.829-.006-.007-.033-.055A9.958 9.958 0 0 1 2 12Z" clip-rule="evenodd"/>
@@ -417,7 +470,7 @@
                         </svg>
                     </div>
                     <a href="mailto:{{ $contact->email }}" class="font-semibold text-abu-abu">{{ $contact->email }}</a>
-                </div>  
+                </div>   --}}
             </div>
         </div>
     </div>

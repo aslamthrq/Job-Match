@@ -59,6 +59,10 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/company-profile/add-benefit', [RecruiterController::class, 'addBenefit'])->name('dashboard.company-profile.add-benefit');
 
 
+        Route::get('/selectionPathtesting', [RecruiterController::class, 'showSelectionPathTesting'])->name('dashboard.showSelectionPathTesting');
+        Route::post('/selectionPathtesting', [RecruiterController::class, 'selectionPathTesting'])->name('dashboard.selectionPathTesting');
+
+
         Route::get('/companySettings', [recruiterController::class, 'companySettings'])->name('dashboard.recruiter.companySettings');
 
         Route::get('/selectionRoom', [RoomController::class, 'selectionRoom'])->name('dashboard.recruiter.selectionRoom');

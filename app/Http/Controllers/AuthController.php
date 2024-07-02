@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use Illuminate\Support\Str;
 
@@ -182,122 +183,141 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:8',
             'role_id' => 'required|exists:roles,id'
         ]);
-
+    
         // If validation fails, redirect back with errors and input data
         if ($validator->fails()) {
             session(['selected_tab' => $request->input('selected_tab')]);
             return back()->withErrors($validator)->withInput();
         }
-
-        // Check if user with the given email already exists
-        $user = User::where('email', $request->email)->first();
-
-        if ($user) {
-            // User exists, check password
-            if (Hash::check($request->password, $user->password)) {
-                // Password matches, assign the new role if not already assigned
-                if (!$user->roles->contains($request->role_id)) {
-                    $user->roles()->attach($request->role_id);
-                }
-
-                // Check if the user already has a candidate record
-                if ($request->role_id == 2) {
-                    // Participant role, check candidate profile
-                    if (!empty($user->candidate->full_name)) {
-                        // If candidate profile is complete, redirect to login
-                        return redirect()->route('login')->withErrors('Email already registered. Please login.');
-                    } else {
-                        // If candidate profile is incomplete, redirect to identityForm
-                        $candidate_contact = new candidate_contact();
-                        $candidate_contact->candidate_id = $user->id;
-                        $candidate_contact->email = $user->email;
-                        $candidate_contact->save();
-
-                        return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Please complete your profile.');
+    
+        // Start a database transaction
+        DB::beginTransaction();
+    
+        try {
+            // Check if user with the given email already exists
+            $user = User::where('email', $request->email)->first();
+    
+            if ($user) {
+                // User exists, check password
+                if (Hash::check($request->password, $user->password)) {
+                    // Password matches, assign the new role if not already assigned
+                    if (!$user->roles->contains($request->role_id)) {
+                        $user->roles()->attach($request->role_id);
                     }
-                } elseif ($request->role_id == 3) {
-                    // Recruiter role, check company profile
-                    $companyUser = $user->companyUser;
-
-                    if ($companyUser && $companyUser->company_id) {
-                        // If recruiter is associated with a company, redirect to appropriate dashboard or page
-                        return redirect()->route('dashboard.recruiter')->with('success', 'Registration successful.');
-                    } else {
-                        // If recruiter is not associated with a company, create a new company
-                        $company = new companies();
-                        $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
-                        $company->save();
-
-                        $company_contact = new companies_contact();
-                        $company_contact->company_id = $company->id;
-                        $company_contact->save();
-
-                        // Associate user with the newly created company
-                        $user->companyUser()->create([
-                            'company_id' => $company->id,
-                        ]);
-
-                        // Redirect to company identity form with the newly created company's ID
-                        return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Please complete your company profile.');
+    
+                    // Check if the user already has a candidate record
+                    if ($request->role_id == 2) {
+                        // Participant role, check candidate profile
+                        if (!empty($user->candidate->full_name)) {
+                            // If candidate profile is complete, commit transaction and redirect to login
+                            DB::commit();
+                            return redirect()->route('login')->withErrors('Email already registered. Please login.');
+                        } else {
+                            // If candidate profile is incomplete, create candidate contact and redirect to identityForm
+                            $candidate_contact = new candidate_contact();
+                            $candidate_contact->candidate_id = $user->id;
+                            $candidate_contact->email = $user->email;
+                            $candidate_contact->save();
+    
+                            DB::commit();
+                            return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Please complete your profile.');
+                        }
+                    } elseif ($request->role_id == 3) {
+                        // Recruiter role, check company profile
+                        $companyUser = $user->companyUser;
+    
+                        if ($companyUser && $companyUser->company_id) {
+                            // If recruiter is associated with a company, commit transaction and redirect to appropriate dashboard or page
+                            DB::commit();
+                            return redirect()->route('dashboard.recruiter')->with('success', 'Registration successful.');
+                        } else {
+                            // If recruiter is not associated with a company, create a new company
+                            $company = new companies();
+                            $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
+                            $company->save();
+    
+                            $company_contact = new companies_contact();
+                            $company_contact->company_id = $company->id;
+                            $company_contact->save();
+    
+                            // Associate user with the newly created company
+                            $user->companyUser()->create([
+                                'company_id' => $company->id,
+                            ]);
+    
+                            DB::commit();
+                            return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Please complete your company profile.');
+                        }
                     }
+                } else {
+                    // Password does not match, rollback transaction and return with error
+                    DB::rollBack();
+                    return back()->withErrors(['password' => 'Password does not match with the registered account.'])->withInput();
                 }
             } else {
-                // Password does not match, return with error
-                return back()->withErrors(['password' => 'Password does not match with the registered account.'])->withInput();
-            }
-        } else {
-            // User does not exist, create new user
-            $user = User::create([
-                'username' => 'user_' . Str::random(8),
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-
-            // Assign the role to the newly created user
-            $user->roles()->attach($request->role_id, [
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-
-            // Create a candidate record for participant role
-            if ($request->role_id == 2) {
-                $candidate = candidates::create([
-                    'user_id' => $user->id,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                // User does not exist, create new user
+                $user = User::create([
+                    'username' => 'user_' . Str::random(8),
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
-
-                $candidate_contact = new candidate_contact();
-                $candidate_contact->candidate_id = $candidate->id;
-                $candidate_contact->email = $user->email;
-                $candidate_contact->save();
-
-                // Redirect to identityForm route with username parameter
-                return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Registration successful. Please complete your profile.');
-            }
-
-            // For recruiter role, create a new company and redirect to company identity form
-            if ($request->role_id == 3) {
-                $company = new companies();
-                $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
-                $company->save();
-
-                $company_contact = new companies_contact();
-                $company_contact->company_id = $company->id;
-                $company_contact->save();
-
-                // Associate user with the newly created company
-                $user->companyUser()->create([
-                    'company_id' => $company->id,
+    
+                // Assign the role to the newly created user
+                $user->roles()->attach($request->role_id, [
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
-
-                // Redirect to company identity form with the newly created company's ID
-                return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Registration successful. Please complete your company profile.');
+    
+                // Create a candidate record for participant role
+                if ($request->role_id == 2) {
+                    $candidate = candidates::create([
+                        'user_id' => $user->id,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+    
+                    $candidate_contact = new candidate_contact();
+                    $candidate_contact->candidate_id = $candidate->id;
+                    $candidate_contact->email = $user->email;
+                    $candidate_contact->save();
+    
+                    DB::commit();
+                    return redirect()->route('identityForm', ['username' => $user->username])->withErrors('Registration successful. Please complete your profile.');
+                }
+    
+                // For recruiter role, create a new company and redirect to company identity form
+                if ($request->role_id == 3) {
+                    $company = new companies();
+                    $company->company_name = 'Company_' . Str::random(8); // Example: Generate a random company name
+                    $company->save();
+    
+                    $company_contact = new companies_contact();
+                    $company_contact->company_id = $company->id;
+                    $company_contact->save();
+    
+                    // Associate user with the newly created company
+                    $user->companyUser()->create([
+                        'company_id' => $company->id,
+                    ]);
+    
+                    DB::commit();
+                    return redirect()->route('showCompanyIdentityForm', ['id' => $company->id])->withErrors('Registration successful. Please complete your company profile.');
+                }
             }
+        } catch (\Exception $e) {
+            // An error occurred; rollback the transaction
+            DB::rollBack();
+    
+            // Log the exception or handle it as needed
+            Log::error('Error during registration: ' . $e->getMessage());
+    
+            // Return back with an error message
+            return back()->withErrors('An error occurred during registration. Please try again.')->withInput();
         }
     }
+    
 
     public function showForgotPasswordForm()
     {

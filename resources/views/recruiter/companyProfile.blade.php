@@ -315,7 +315,7 @@
 
 
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    @include('components.jobVacancy')
+                    {{-- @include('components.jobVacancy') --}}
                 </div>
 
                 <div class="hidden rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
