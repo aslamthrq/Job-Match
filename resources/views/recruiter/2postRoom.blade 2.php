@@ -11,11 +11,11 @@
 </head>
 <body>
     @include('recruiter.components.sidebar')
-     
+
  <div class=" sm:ml-80">
     <div class="p-4 m-4 rounded-lg dark:border-gray-700">
 
-        
+
 
         <nav class="flex mb-4" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -40,7 +40,7 @@
 
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-4  p-8 flex items-center h-28 mb-4 rounded bg-gradient-to-r from-negative to-negative-hover dark:bg-gray-800">
-               
+
                  <div>
                      <p class="mb-2 text-sm font-bold text-white">
                          Job portal:
@@ -52,7 +52,7 @@
                              </svg>
                          </div>
                          <input type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-negative focus:border-negative"  placeholder="Search participant">
-                         
+
                          <div class="relative">
                              <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-2 " type="button">
                                  <span class="sr-only">Role Category</span>
@@ -79,8 +79,8 @@
                                  </div>
                              </div>
                          </div>
-                 
-                     
+
+
                      </div>
                  </div>
             </div>
@@ -97,7 +97,7 @@
 
 
         {{-- Body konten --}}
-        
+
         <div class="grid grid-cols-1 md:grid-cols-3  gap-4">
 
             <div>
@@ -108,19 +108,19 @@
                                 <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v6.41A7.5 7.5 0 1 0 10.5 22H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
                                 <path fill-rule="evenodd" d="M9 16a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm6-3a1 1 0 0 1 1 1v1h1a1 1 0 1 1 0 2h-1v1a1 1 0 1 1-2 0v-1h-1a1 1 0 1 1 0-2h1v-1a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
                               </svg>
-                              
+
                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">Click untuk post <span class="font-semibold">Job</span></p>
                         </div>
                     </button>
-                </div> 
+                </div>
             </div>
 
             @include('recruiter.components.cardPortal')
-          
+
         </div>
     </div>
  </div>
- 
+
 
 
  <!-- Share modal -->
@@ -131,7 +131,7 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5">
                 <h3 class="text-lg text-gray-500 dark:text-gray-400">
-                    Share 
+                    Share
                 </h3>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white" data-modal-toggle="course-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -168,11 +168,11 @@
         </div>
     </div>
 </div>
- 
 
 
 
-    
+
+
 <!-- Main modal -->
 <div id="postJob-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-50  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-4xl h-full">
@@ -243,7 +243,7 @@
                                 <input datepicker datepicker-autohide datepicker-format="dd-mm-yyyy" type="text" name="dateline" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
                             </div>
                         </div>
-                    
+
                         <div class="col-span-2 sm:col-span-1">
                             <label for="work_system" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Work System</label>
                             <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -269,21 +269,21 @@
                         </div>
                         <div class="col-span-4">
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi pekerjaan</label>
-                            <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis deskripsi dan kualifikasi"></textarea>                    
+                            <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis deskripsi dan kualifikasi"></textarea>
                         </div>
                         <div class="col-span-4">
                             <label for="requirements" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Requirements pekerjaan</label>
-                            <textarea id="requirements" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis deskripsi dan kualifikasi"></textarea>                    
+                            <textarea id="requirements" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis deskripsi dan kualifikasi"></textarea>
                         </div>
                 </div>
             </form>
             <!-- Modal footer -->
             <div class="flex items-center border-t border-gray-200 rounded-b dark:border-gray-600 p-4" >
                 <div class="flex">
-                    <button 
-                    data-modal-hide="postJob-modal" 
-                    data-modal-target="timeline-modal" 
-                    data-modal-show="timeline-modal"  
+                    <button
+                    data-modal-hide="postJob-modal"
+                    data-modal-target="timeline-modal"
+                    data-modal-show="timeline-modal"
                     type="button"
                     class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 " >
                         Berikutnya
@@ -292,9 +292,9 @@
                         </svg>
                         <span class="sr-only">Berikutnya</span>
                     </button>
-                </div>                 
+                </div>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -318,13 +318,13 @@
             <!-- Modal body -->
             <form class="p-4 md:p-5 overflow-y-auto flex-grow" id="formSelectionPath" method="POST">
                 @csrf
-                <div  id="pathsContainer" class="relative mb-4 md:mb-5"> 
+                <div  id="pathsContainer" class="relative mb-4 md:mb-5">
                     <div id="pathTemplate" tabindex="0" class="path-selection mb-2 rounded-md p-2 bg-white focus:outline-none focus-within:border-l-8 focus-within:border-e73002 shadow-md" style="display: none;">
                         <div class="flex flex-wrap gap-4">
                             <div class="flex items-center justify-center w-10 h-10 z-0 bg-e73002 text-center rounded-md mb-5">
                                 <span class="text-white text-base font-bold">1</span>
                             </div>
-                            
+
                             <div class="relative flex-1 min-w-[200px] mb-5 group">
                                 <input type="text" name="pathTittle" id="pathTittle" class="block py-2 px-0 w-full text-base font-bold text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-e73002 peer" placeholder="Masukkan Judul" required />
                                 <label for="pathTittle" class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-e73002 peer-focus:dark:e73002 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
@@ -336,7 +336,8 @@
                                 <option value="Challange">Challange</option>
                             </select>
                         </div>
-                          <div class="uploud-berkas grid grid-cols-5 gap-4" style="display: none;">        
+
+                        <div class="uploud-berkas grid grid-cols-5 gap-4" style="display: none;">
                               <div class="col-span-5">
                                   <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan deskripsi seleksi"></textarea>
@@ -368,8 +369,8 @@
                                   <input class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file">
                               </div>
                           </div>
-                          <div class="challange-selection grid grid-cols-5 gap-4" style="display: none;">  
-                                  
+                          <div class="challange-selection grid grid-cols-5 gap-4" style="display: none;">
+
                               <div class="col-span-5">
                                   <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan deskripsi seleksi"></textarea>
@@ -405,7 +406,7 @@
                                   <input class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file">
                               </div>
                           </div>
-                          <div class="meet-invitation-selection grid grid-cols-5 gap-4" style="display: none;">        
+                          <div class="meet-invitation-selection grid grid-cols-5 gap-4" style="display: none;">
                               <div class="col-span-5">
                                   <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
                                   <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan deskripsi seleksi"></textarea>
@@ -464,7 +465,7 @@
                                   <span class="sr-only">Delete Path</span>
                               </button>
                           </div>
-                
+
                       </div>
                       <button id="addPathBtn" class="text-gray-600 gap-2 border border-dashed inline-flex w-full justify-center hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-md">
                           <svg class="w-6 h-6  text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -478,10 +479,10 @@
             <div class="flex items-center border-t border-gray-200 rounded-b dark:border-gray-600 p-4" >
                 <div class="flex">
                     <!-- Previous Button -->
-                    <button  
-                    data-modal-hide="timeline-modal" 
-                    data-modal-target="postJob-modal" 
-                    data-modal-show="postJob-modal"  
+                    <button
+                    data-modal-hide="timeline-modal"
+                    data-modal-target="postJob-modal"
+                    data-modal-show="postJob-modal"
                     class="flex items-center justify-center px-3 h-8 me-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
@@ -495,32 +496,32 @@
                             </svg>
                         Simpan
                     </button>
-                </div>                 
+                </div>
             </div>
         </div>
     </div>
 </div>
- 
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const pathsContainer = document.getElementById('pathsContainer');
         const pathTemplate = document.getElementById('pathTemplate');
         const addPathBtn = document.getElementById('addPathBtn');
-    
+
         function updatePathNumbers() {
             const paths = pathsContainer.querySelectorAll('.path-selection');
             paths.forEach((path, index) => {
                 path.querySelector('span').textContent = index;
             });
         }
-    
+
         function addNewPath() {
             const newPath = pathTemplate.cloneNode(true);
             newPath.style.display = 'block';
             newPath.removeAttribute('id');
             pathsContainer.insertBefore(newPath, addPathBtn);
-    
+
             const typeSelection = newPath.querySelector('.type-selection');
             typeSelection.addEventListener('change', (event) => {
                 const value = event.target.value;
@@ -528,7 +529,7 @@
                 newPath.querySelector('.challange-selection').style.display = (value === 'Challange' ? 'grid' : 'none');
                 newPath.querySelector('.meet-invitation-selection').style.display = (value === 'meetInvitation' ? 'grid' : 'none');
             });
-    
+
             newPath.querySelector('.btn-up-path').addEventListener('click', () => {
                 const prevSibling = newPath.previousElementSibling;
                 if (prevSibling && prevSibling !== pathTemplate) {
@@ -536,7 +537,7 @@
                     updatePathNumbers();
                 }
             });
-    
+
             newPath.querySelector('.btn-down-path').addEventListener('click', () => {
                 const nextSibling = newPath.nextElementSibling;
                 if (nextSibling && nextSibling !== addPathBtn) {
@@ -544,17 +545,17 @@
                     updatePathNumbers();
                 }
             });
-    
+
             newPath.querySelector('.btn-delete-path').addEventListener('click', () => {
                 pathsContainer.removeChild(newPath);
                 updatePathNumbers();
             });
-    
+
             updatePathNumbers();
         }
-    
+
         addPathBtn.addEventListener('click', addNewPath);
-    
+
         // Memanggil addNewPath pertama kali untuk menambahkan path pertama dengan nomor urut 1
         addNewPath();
     });

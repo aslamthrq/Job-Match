@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\path_challange;
+use App\Models\path_meeting_invitation;
+use App\Models\path_pemberkasan;
 use App\Models\path_types;
+use App\Models\paths;
 use App\Models\rooms;
+use App\Models\User;
+use App\Services\FileServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
+
     public function selectionRoom()
     {
         // Ambil user yang sedang login
@@ -26,31 +35,104 @@ class RoomController extends Controller
     // Method untuk menyimpan data room baru
     public function store(Request $request)
     {
-        $roomInput = $request->all();
-        // dd($roomInput);
+
+        DB::beginTransaction();
+        try {
+            $fileServices = new FileServices();
+
+            // dd($request->all());
+
+            $roomInput = $request->all();
+
+            $room =  rooms::create([
+                'company_id' => auth()->user()->companyUser->company_id,
+                'position_name' => $roomInput['position_name'],
+                'departement' => $roomInput['departement'],
+                'years_of_experience_criteria' => $roomInput['years_of_experience_criteria'],
+                'total_open_position' => $roomInput['total_open_position'],
+                'salary' => intval(str_replace('.', '', $roomInput['salary'])),
+                'deadline' => $roomInput['deadline'],
+                'work_system' => $roomInput['work_system'],
+                'working_hours' => $roomInput['working_hours'],
+                'access_rights' => $roomInput['access_rights'],
+                'description' => $roomInput['description'],
+                'requirements' => $roomInput['requirements'],
+
+            ]);
 
 
-        $room = new rooms();
-        $room->company_id = auth()->user()->companyUser->company_id; // Ambil ID perusahaan dari pengguna yang sedang login
-        $room->position_name = $roomInput['position_name'];
-        $room->departement = $roomInput['departement'];
-        $room->years_of_experience_criteria = $roomInput['years_of_experience_criteria'];
-        $room->total_open_position = $roomInput['total_open_position'];
-        $room->salary = $roomInput['salary'];
-        $room->deadline = \Carbon\Carbon::createFromFormat('d-m-Y', $roomInput['deadline']);
-        $room->work_system = $roomInput['work_system'];
-        $room->working_hours = $roomInput['working_hours'];
-        $room->access_rights = $roomInput['access_rights'];
-        $room->description = $roomInput['description'];
-        $room->requirements = $roomInput['requirements'];
-        $room->save();
-        
-        return redirect()->back()->with('success', 'Data lowongan berhasil disimpan.');
+            $uploadBerkas = paths::create([
+                'room_id' => $room->id,
+                'path_name' => $request->berkas_path_name,
+                'path_type_id' => 1,
+            ]);
+
+            $meetInvitation = paths::create([
+                'room_id' => $room->id,
+                'path_name' => $request->meet_path_name,
+                'path_type_id' => 2,
+            ]);
+
+            $challangePath = paths::create([
+                'room_id' => $room->id,
+                'path_name' =>
+                $request->challange_path_name,
+                'path_type_id' => 3,
+            ]);
+
+            $fileBerkas = $fileServices->uploadFile($request->file('berkas_lampiran'), 'berkas');
+            $meetBerkas = $fileServices->uploadFile($request->file('meet_lampiran'), 'meet');
+            $challangeBerkas = $fileServices->uploadFile($request->file('challange_lampiran'), 'challange');
+
+            $berkas_rentang_waktu = $request->berkas_start . ' - ' . $request->berkas_end;
+            $meet_rentang_waktu = $request->meet_start . ' - ' . $request->meet_end;
+            $challange_rentang_waktu = $request->challange_start . ' - ' . $request->challange_end;
+
+
+            path_pemberkasan::create([
+                'path_id' => $uploadBerkas->id,
+                'deskripsi' => $request->berkas_deskripsi,
+                'rentang_waktu' => $berkas_rentang_waktu,
+                'lampiran' => $fileBerkas
+            ]);
+
+            path_meeting_invitation::create([
+                'path_id' => $meetInvitation->id,
+                'deskripsi' => $request->meet_deskripsi,
+                'lokasi_link_meet' =>  $request->meet_lokasi_link_meet,
+                'rentang_waktu' => $meet_rentang_waktu,
+                'lampiran' => $meetBerkas
+            ]);
+
+            path_challange::create([
+                'path_id' => $challangePath->id,
+                'deskripsi' => $request->challange_deskripsi,
+                'link_lampiran_challange' => $request->challange_link_lampiran_challange,
+                'rentang_waktu' => $challange_rentang_waktu,
+                'lampiran' => $challangeBerkas,
+            ]);
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Data lowongan berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e->getMessage());
+            // something went wrong
+        }
     }
 
 
-    public function selectionRoomDetail()
+    public function selectionRoomDetail($id)
     {
-        return view('recruiter.postRoomDetail');
+        $room = rooms::findOrFail($id);
+
+        $allcandidates
+            = $room->candidates()->paginate(10);
+        // dd($room->id);
+        $berkasPath = paths::where('room_id', $room->id)->where('path_type_id', 1)->first();
+        $meetPath = paths::where('room_id', $room->id)->where('path_type_id', 2)->first();
+        $challangePath = paths::where('room_id', $room->id)->where('path_type_id', 3)->first();
+        // dd(paths::all());
+        return view('recruiter.postRoomDetail', compact('room', 'allcandidates', 'berkasPath', 'meetPath', 'challangePath'));
     }
 }

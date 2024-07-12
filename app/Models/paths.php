@@ -23,17 +23,17 @@ class paths extends Model
 
     public function pathPemberkasan()
     {
-        return $this->hasMany(path_pemberkasan::class);
+        return $this->hasOne(path_pemberkasan::class, 'path_id', 'id');
     }
 
     public function pathMeetingInvitation()
     {
-        return $this->hasMany(path_meeting_invitation::class);
+        return $this->hasOne(path_meeting_invitation::class, 'path_id', 'id');
     }
 
     public function pathChallange()
     {
-        return $this->hasMany(path_challange::class);
+        return $this->hasOne(path_challange::class, 'path_id', 'id');
     }
 
     public function pathDetails()

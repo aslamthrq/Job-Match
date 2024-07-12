@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Candidate\RoomCandidateController;
+use App\Http\Controllers\Candidate\StatusController;
+use App\Http\Controllers\Candidate\SubmissionController;
 use App\Http\Controllers\candidatesController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\recruiterController;
 use App\Http\Controllers\RoomController;
+use App\Models\RoomCandidate;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -44,8 +48,25 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/profile/add-experience', [CandidatesController::class, 'addExperience'])->name('dashboard.kandidat.addExperience');
 
         Route::get('/lowongan', [CandidatesController::class, 'lowongan'])->name('dashboard.kandidat.lowongan');
-        Route::get('/status', [CandidatesController::class, 'status'])->name('dashboard.kandidat.status');
-        Route::get('/statusDetail', [CandidatesController::class, 'statusDetail'])->name('dashboard.kandidat.statusDetail');
+
+        Route::controller(StatusController::class)->prefix('status')->name('dashboard.kandidat.status')->group(function () {
+            Route::get('/', 'index');
+            Route::get('/detail/{id}', 'detail')->name('.detail');
+        });
+        // Route::get('/status', [CandidatesController::class, 'status'])->name('dashboard.kandidat.status');
+
+
+        // Route::get('/statusDetail', [CandidatesController::class, 'statusDetail'])->name('dashboard.kandidat.statusDetail');
+
+        Route::prefix('apply')->controller(RoomCandidateController::class)->group(function () {
+            Route::get('/{id}', 'apply')->name('kandidat.apply');
+        });
+
+        Route::prefix('submission')->controller(SubmissionController::class)->group(function () {
+            Route::post('/pemberkasan', 'submissionPemberkasan')->name('kandidat.submissionPemberkasan');
+            Route::post('/challenges', 'submissionChallenges')->name('kandidat.submissionChallenges');
+            Route::post('/meeting-invitation', 'submissionMeetingInvitation')->name('kandidat.submissionMeetingInvitation');
+        });
     });
 
     // Recruiter routes
@@ -69,7 +90,7 @@ Route::prefix('dashboard')->group(function () {
         Route::post('/selectionRoom', [RoomController::class, 'store'])->name('dashboard.recruiter.selectionRoom.store');
 
 
-        Route::get('/selectionRoom/001', [RoomController::class, 'selectionRoomDetail'])->name('dashboard.recruiter.selectionRoom/001');
+        Route::get('/selectionRoom/{id}', [RoomController::class, 'selectionRoomDetail'])->name('dashboard.recruiter.selectionRoom.detail');
         Route::get('/candidate', [recruiterController::class, 'candidate'])->name('dashboard.recruiter.candidate');
 
         // Join or Create Company routes

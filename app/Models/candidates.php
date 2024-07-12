@@ -43,4 +43,9 @@ class candidates extends Model
     {
         return $this->hasMany(educational_history::class, 'candidate_id');
     }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(rooms::class, 'room_candidates')->withPivot('status');
+    }
 }
