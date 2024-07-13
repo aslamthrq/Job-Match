@@ -44,7 +44,6 @@
                                 Uploud</label>
                         </div>
                     </li>
-
                     <li>
                         <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                             <input checked="" id="filter-radio-example-2" type="radio" value=""
@@ -62,8 +61,6 @@
                                 class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Gagal</label>
                         </div>
                     </li>
-
-
 
                 </ul>
             </div>
@@ -112,7 +109,7 @@
             @php
                 $no = 1;
             @endphp
-            @foreach ($berkasCandidates as $berkas)
+            @foreach ($challangeCandidates as $berkas)
                 <tr class="bg-white hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="w-4 p-4 whitespace-nowrap">
                         1
@@ -142,15 +139,15 @@
                         @elseif($berkas->status == 'rejected')
                             <span
                                 class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                                <span class="w-2 h-2 bg-red-400 rounded-full me-1"></span>
+                                <span class="w-2 h-2 rounded-full bg-reed-400 me-1"></span>
                                 Ditolak
                             </span>
                         @endif
 
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <button type="button" data-modal-target="modal-{{ $berkas->id }}"
-                            data-modal-toggle="modal-{{ $berkas->id }}"
+                        <button type="button" data-modal-target="challangeModal-{{ $berkas->id }}"
+                            data-modal-toggle="challangeModal-{{ $berkas->id }}"
                             class="text-gray-500 gap-2 bg-gray-50 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2">
                             <svg fill="none" aria-hidden="true" class="flex-shrink-0 w-5 h-5"
                                 viewBox="0 0 20 21">
@@ -178,7 +175,7 @@
                     </td>
                 </tr>
                 <!-- Pemberkasan modal -->
-                <div id="modal-{{ $berkas->id }}" tabindex="-1" aria-hidden="true"
+                <div id="challangeModal-{{ $berkas->id }}" tabindex="-1" aria-hidden="true"
                     class="hidden fixed top-0 right-0 left-0 z-50  justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative h-full p-4">
                         <!-- Modal content -->
@@ -215,7 +212,7 @@
                                         type="button">
                                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" 
+                                            <path stroke="currentColor" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="2"
                                                 d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5" />
                                         </svg>
@@ -223,7 +220,7 @@
                                     </a>
                                     <button type="button"
                                         class="inline-flex items-center self-center p-2 text-sm font-medium text-center text-gray-400 rounded-lg hover:bg-gray-200 hover:text-gray-900 bg-gray-50"
-                                        data-modal-toggle="modal{{ $berkas->id }}">
+                                        data-modal-toggle="challangeModal">
                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 14 14">
                                             <path stroke="currentColor" stroke-linecap="round"
@@ -254,12 +251,12 @@
                                     PDF
                                 </span>
                                 <div class="flex space-x-2">
-                                    <form id="submissionForm-{{ $berkas->id }}"
-                                        action="{{ route('dashboard.recruiter.submission.lolosBerkas') }}"
+                                    <form id="submissionChallange-{{ $berkas->id }}"
+                                        action="{{ route('dashboard.recruiter.submission.lolosChallange') }}"
                                         method="POST">
                                         @csrf
                                         <input type="hidden" value="{{ $berkas->id }}"
-                                            name="submission_pemberkasan_id">
+                                            name="submission_challange_id">
                                         <input type="hidden" value="{{ $berkas->candidate_id }}"
                                             name="candidates_id">
                                         <input type="hidden" value="{{ $room->id }}" name="rooms_id">
@@ -267,18 +264,17 @@
 
                                         <button type="button"
                                             class="text-white bg-positive hover:bg-positive-hover font-medium rounded-lg text-sm px-5 py-2.5"
-                                            onclick="berkasForm({{ $berkas->id }}, 'approved')">Lolos</button>
+                                            onclick="submitForm({{ $berkas->id }}, 'approved')">Lolos</button>
                                         <button type="button"
                                             class="text-white bg-negative hover:bg-negative-hover font-medium rounded-lg text-sm px-5 py-2.5"
-                                            onclick="berkasForm({{ $berkas->id }}, 'rejected')">Gagal</button>
+                                            onclick="submitForm({{ $berkas->id }}, 'rejected')">Gagal</button>
                                         <script>
-                                            function berkasForm(berkasId, status) {
+                                            function submitForm(berkasId, status) {
                                                 document.getElementById('status-' + berkasId).value = status;
-                                                document.getElementById('submissionForm-' + berkasId).submit();
+                                                document.getElementById('submissionChallange-' + berkasId).submit();
                                             }
                                         </script>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -288,23 +284,22 @@
         </tbody>
 
     </table>
-
     <nav class="flex flex-wrap items-center justify-between pt-4 flex-column md:flex-row"
         aria-label="Table navigation">
         <span
             class="block w-full mb-4 text-sm font-normal text-gray-500 dark:text-gray-400 md:mb-0 md:inline md:w-auto">
             Showing
             <span class="font-semibold text-gray-900 dark:text-white">
-                {{ $berkasCandidates->firstItem() }}-{{ $berkasCandidates->lastItem() }}
+                {{ $challangeCandidates->firstItem() }}-{{ $challangeCandidates->lastItem() }}
             </span>
             of
             <span class="font-semibold text-gray-900 dark:text-white">
-                {{ $berkasCandidates->total() }}
+                {{ $challangeCandidates->total() }}
             </span>
         </span>
         <ul class="inline-flex h-8 -space-x-px text-sm rtl:space-x-reverse">
             {{-- Previous Page Link --}}
-            @if ($berkasCandidates->onFirstPage())
+            @if ($challangeCandidates->onFirstPage())
                 <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                     <span
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 ms-0 rounded-s-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
@@ -313,7 +308,7 @@
                 </li>
             @else
                 <li>
-                    <a href="{{ $berkasCandidates->previousPageUrl() }}"
+                    <a href="{{ $challangeCandidates->previousPageUrl() }}"
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 ms-0 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         Previous
                     </a>
@@ -321,8 +316,8 @@
             @endif
 
             {{-- Pagination Elements --}}
-            @foreach ($berkasCandidates as $page => $url)
-                @if ($page == $berkasCandidates->currentPage())
+            @foreach ($challangeCandidates as $page => $url)
+                @if ($page == $challangeCandidates->currentPage())
                     <li>
                         <a href="{{ $url }}"
                             class="flex items-center justify-center h-8 px-3 leading-tight text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
@@ -340,9 +335,9 @@
             @endforeach
 
             {{-- Next Page Link --}}
-            @if ($berkasCandidates->hasMorePages())
+            @if ($challangeCandidates->hasMorePages())
                 <li>
-                    <a href="{{ $berkasCandidates->nextPageUrl() }}"
+                    <a href="{{ $challangeCandidates->nextPageUrl() }}"
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         Next
                     </a>

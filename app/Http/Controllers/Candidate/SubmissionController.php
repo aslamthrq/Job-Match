@@ -16,7 +16,7 @@ class SubmissionController extends Controller
         $request->validate([
             'path_pemberkasan_id' => 'required',
             'berkas' => 'required',
-            'keterangan_tambahan' => 'required',
+            'keterangan_tambahan' => 'nullable',
         ]);
 
         $candidate = auth()->user()->candidate;

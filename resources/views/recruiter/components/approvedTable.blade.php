@@ -107,7 +107,7 @@
             @php
                 $no = 1;
             @endphp
-            @foreach ($allcandidates as $candidate)
+            @foreach ($approvedCandidates as $candidate)
                 <tr class="bg-white hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="w-4 p-4 whitespace-nowrap">
                         {{ $no }}
@@ -132,6 +132,7 @@
                         Semarang
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
+
                         @if ($candidate->pivot->status == 'approved')
                             <span
                                 class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
@@ -163,6 +164,7 @@
                                 Absen
                             </span>
                         @endif
+
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <button data-modal-target="editUserModal" data-modal-show="editUserModal" type="button"
@@ -200,16 +202,16 @@
             class="block w-full mb-4 text-sm font-normal text-gray-500 dark:text-gray-400 md:mb-0 md:inline md:w-auto">
             Showing
             <span class="font-semibold text-gray-900 dark:text-white">
-                {{ $allcandidates->firstItem() }}-{{ $allcandidates->lastItem() }}
+                {{ $approvedCandidates->firstItem() }}-{{ $approvedCandidates->lastItem() }}
             </span>
             of
             <span class="font-semibold text-gray-900 dark:text-white">
-                {{ $allcandidates->total() }}
+                {{ $approvedCandidates->total() }}
             </span>
         </span>
         <ul class="inline-flex h-8 -space-x-px text-sm rtl:space-x-reverse">
             {{-- Previous Page Link --}}
-            @if ($allcandidates->onFirstPage())
+            @if ($approvedCandidates->onFirstPage())
                 <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                     <span
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 ms-0 rounded-s-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
@@ -218,7 +220,7 @@
                 </li>
             @else
                 <li>
-                    <a href="{{ $allcandidates->previousPageUrl() }}"
+                    <a href="{{ $approvedCandidates->previousPageUrl() }}"
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 ms-0 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         Previous
                     </a>
@@ -226,8 +228,8 @@
             @endif
 
             {{-- Pagination Elements --}}
-            @foreach ($allcandidates as $page => $url)
-                @if ($page == $allcandidates->currentPage())
+            @foreach ($approvedCandidates as $page => $url)
+                @if ($page == $approvedCandidates->currentPage())
                     <li>
                         <a href="{{ $url }}"
                             class="flex items-center justify-center h-8 px-3 leading-tight text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
@@ -245,9 +247,9 @@
             @endforeach
 
             {{-- Next Page Link --}}
-            @if ($allcandidates->hasMorePages())
+            @if ($approvedCandidates->hasMorePages())
                 <li>
-                    <a href="{{ $allcandidates->nextPageUrl() }}"
+                    <a href="{{ $approvedCandidates->nextPageUrl() }}"
                         class="flex items-center justify-center h-8 px-3 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                         Next
                     </a>

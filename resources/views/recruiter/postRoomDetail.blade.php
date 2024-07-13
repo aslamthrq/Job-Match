@@ -240,7 +240,7 @@
                 </div>
                 <div class="hidden p-4 border rounded-lg bg-gray-50" id="challange" role="tabpanel"
                     aria-labelledby="challange-tab">
-                    {{-- @include('recruiter.components.pemberkasanTable') --}}
+                    @include('recruiter.components.challangeTable')
                     <h1>Challange</h1>
                 </div>
                 <div class="hidden p-4 border rounded-lg bg-gray-50" id="meeting" role="tabpanel"
@@ -250,7 +250,7 @@
                 </div>
                 <div class="hidden p-4 border rounded-lg bg-gray-50" id="approved" role="tabpanel"
                     aria-labelledby="approved-tab">
-                    {{-- @include('recruiter.components.meetInvitationTable') --}}
+                    @include('recruiter.components.approvedTable')
                     <h1>Approved</h1>
                 </div>
             </div>

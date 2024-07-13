@@ -6,6 +6,7 @@ use App\Http\Controllers\Candidate\StatusController;
 use App\Http\Controllers\Candidate\SubmissionController;
 use App\Http\Controllers\candidatesController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Recruiter\SubmissionRecruiterController;
 use App\Http\Controllers\recruiterController;
 use App\Http\Controllers\RoomController;
 use App\Models\RoomCandidate;
@@ -100,6 +101,12 @@ Route::prefix('dashboard')->group(function () {
         // View forms for joining or creating company
         Route::get('/join-company-form', [recruiterController::class, 'showJoinCompanyForm'])->name('dashboard.recruiter.showJoinCompanyForm');
         Route::get('/create-company-form', [recruiterController::class, 'showCreateCompanyForm'])->name('dashboard.recruiter.showCreateCompanyForm');
+
+        Route::controller(SubmissionRecruiterController::class)->prefix('submission')->name('dashboard.recruiter.submission')->group(function () {
+            Route::post('/lolos-berkas', 'lolosBerkas')->name('.lolosBerkas');
+            Route::post('/lolos-challange', 'lolosChallange')->name('.lolosChallange');
+            Route::post('/lolos-meeting-invitation', 'lolosMeetingInvitation')->name('.lolosMeetingInvitation');
+        });
     });
 
 

@@ -14,7 +14,7 @@
 <body>
     @include('candidates.components.sidebar')
 
-    <div class="sm:ml-80">
+    <div class=" sm:ml-80">
         <div class="p-4 m-4 rounded-lg dark:border-gray-700">
             <nav class="flex mb-4" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -61,24 +61,12 @@
                 <ul class="flex items-center w-full text-sm font-medium text-center text-e73002 sm:text-base"
                     id="default-tab" data-tabs-toggle="#default-tab-content" data-tabs-active-classes="text-e73002"
                     data-tabs-inactive-classes="text-gray-500" role="tablist">
-
-                    @php
-                        $activeTab = 'participant';
-                        if ($submission_pemberkasan != null) {
-                            $activeTab = 'dashboard';
-                        }
-                        if ($submission_pemberkasan != null && $submission_challange != null) {
-                            $activeTab = 'settings';
-                        }
-                    @endphp
-
                     <li class="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-e73002 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 "
                         role="path point selection">
                         <button
-                            class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 {{ $activeTab == 'participant' ? 'active' : '' }}"
+                            class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200"
                             id="participant-tab" data-tabs-target="#participant" type="button" role="tab"
-                            aria-controls="participant"
-                            aria-selected="{{ $activeTab == 'participant' ? 'true' : 'false' }}">
+                            aria-controls="participant" aria-selected="false">
                             <div class="ps-3">
                                 <span
                                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-full bg-e73002">1</span>
@@ -91,18 +79,17 @@
                             </div>
                         </button>
                     </li>
-                    <li class="flex md:w-full items-center sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-e73002 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 "
+                    <li class="flex  md:w-full items-center  sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-e73002 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 "
                         role="path point selection">
                         <button
-                            class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 {{ $activeTab == 'dashboard' ? 'active' : '' }}"
+                            class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 "
                             id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
-                            aria-controls="dashboard"
-                            aria-selected="{{ $activeTab == 'dashboard' ? 'true' : 'false' }}">
+                            aria-controls="dashboard" aria-selected="true">
                             <div class="ps-3">
                                 <span
                                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-full bg-e73002">2</span>
                                 <div
-                                    class="flex items-center after:content-['/']  sm:after:hidden after:mx-2 after:text-gray-200">
+                                    class="flex items-center after:content-['/']  sm:after:hidden after:mx-2 after:text-gray-200 ">
                                     Challange
                                 </div>
                                 <div class="block mt-2 text-xs text-gray-500">
@@ -111,9 +98,8 @@
                         </button>
                     </li>
                     <li class="flex items-center" role="path point selection">
-                        <button class="flex me-2 {{ $activeTab == 'settings' ? 'active' : '' }}" id="settings-tab"
-                            data-tabs-target="#settings" type="button" role="tab" aria-controls="settings"
-                            aria-selected="{{ $activeTab == 'settings' ? 'true' : 'false' }}">
+                        <button class="flex me-2" id="settings-tab" data-tabs-target="#settings" type="button"
+                            role="tab" aria-controls="settings" aria-selected="false">
                             <div class="ps-3">
                                 <span
                                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-full bg-e73002">3</span>
@@ -128,35 +114,76 @@
                     </li>
                 </ul>
             </div>
+            {{-- @dd(asset($berkasPath->pathPemberkasan->lampiran)); --}}
 
             <div id="default-tab-content">
-                <div class="{{ $activeTab == 'participant' ? 'block' : 'hidden' }} p-4 border rounded-lg bg-gray-50"
-                    id="participant" role="tabpanel" aria-labelledby="participant-tab">
-                    @if ($submission_pemberkasan)
-                        @include('candidates.components.pemberkasan_done')
+                <div class="hidden p-4 border rounded-lg bg-gray-50" id="participant" role="tabpanel"
+                    aria-labelledby="participant-tab">
+                    @if ($submission_pemberkasan && $submission_pemberkasan->status == 'rejected')
+                        {{-- @include('candidates.components.pemberkasan_failed') --}}
+                        Maaf Anda tidak lolos seleksi
+                    @elseif ($submission_pemberkasan && $submission_pemberkasan->status == 'approved')
+                        Silahkan lanjut ke tahap selanjutnya
+                    @elseif($submission_pemberkasan && $submission_pemberkasan->status == 'pending')
+                        Mohon menunggu hasil seleksi
                     @else
                         @include('candidates.components.pemberkasan')
                     @endif
                 </div>
-                <div class="{{ $activeTab == 'dashboard' ? 'block' : 'hidden' }} p-4 border rounded-lg bg-gray-50"
-                    id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                    @if ($submission_challange)
-                        @include('candidates.components.challange_done')
+                <div class="hidden p-4 border rounded-lg bg-gray-50" id="dashboard" role="tabpanel"
+                    aria-labelledby="dashboard-tab">
+                    {{-- jika suybmission_pemberkasan ada dan satatus nya gagal maka --}}
+                    @if ($submission_pemberkasan == null)
+                        Mohon isi pemberkasan terlebih dahulu
+                    @elseif($submission_challange != null && $submission_challange->status == 'approved')
+                        Silahkan lanjut ke tahap selanjutnya
+                    @elseif ($submission_pemberkasan && $submission_pemberkasan->status == 'rejected')
+                        {{-- @include('candidates.components.pemberkasan_failed') --}}
+                        Maaf Anda tidak lolos seleksi
+                    @elseif ($submission_pemberkasan && $submission_pemberkasan->status == 'approved')
+                        @if ($submission_challange != null)
+                            @include('candidates.components.challange_done')
+                        @else
+                            @include('candidates.components.challange')
+                        @endif
+                    @elseif($submission_pemberkasan && $submission_pemberkasan->status == 'pending')
+                        Mohon menunggu hasil seleksi
                     @else
-                        @include('candidates.components.challange')
                     @endif
+
+
+
+
                 </div>
-                <div class="{{ $activeTab == 'settings' ? 'block' : 'hidden' }} p-4 border rounded-lg bg-gray-50"
-                    id="settings" role="tabpanel" aria-labelledby="settings-tab">
-                    @if ($submission_meeting)
-                        @include('candidates.components.meetInvitation_done')
+                <div class="hidden p-4 border rounded-lg bg-gray-50" id="settings" role="tabpanel"
+                    aria-labelledby="settings-tab">
+                    @if ($submission_pemberkasan == null || $submission_challange == null)
+                        Mohon isi pemberkasan terlebih dahulu
+                    @elseif($submission_meeting != null && $submission_meeting->status == 'approved')
+                        Selamat Anda diterima pekerjaan
+                    @elseif ($submission_challange && $submission_challange->status == 'rejected')
+                        {{-- @include('candidates.components.pemberkasan_failed') --}}
+                        Maaf Anda tidak lolos seleksi
+                    @elseif ($submission_challange && $submission_challange->status == 'approved')
+                        @if ($submission_meeting != null)
+                            @include('candidates.components.meetInvitation_done')
+                        @else
+                            @include('candidates.components.meetInvitation')
+                        @endif
+                    @elseif($submission_challange && $submission_challange->status == 'pending')
+                        Mohon menunggu hasil seleksi
                     @else
-                        @include('candidates.components.meetInvitation')
                     @endif
+
+
                 </div>
             </div>
         </div>
+
+
     </div>
+    </div>
+
 </body>
 
 </html>

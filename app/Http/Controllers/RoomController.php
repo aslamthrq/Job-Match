@@ -10,7 +10,9 @@ use App\Models\paths;
 use App\Models\rooms;
 use App\Models\User;
 use App\Services\FileServices;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -122,17 +124,63 @@ class RoomController extends Controller
     }
 
 
+    // public function selectionRoomDetail($id)
+    // {
+    //     $room = rooms::findOrFail($id);
+
+    //     $allcandidates
+    //         = $room->candidates()->paginate(10);
+    //     // dd($room->id);
+    //     $berkasPath = paths::where('room_id', $room->id)->where('path_type_id', 1)->first();
+    //     $meetPath = paths::where('room_id', $room->id)->where('path_type_id', 2)->first();
+    //     $challangePath = paths::where('room_id', $room->id)->where('path_type_id', 3)->first();
+    //     // dd(paths::all());
+    //     // foreach ($berkasPath->pathPemberkasan->submissionPemberkasan as $submission) {
+    //     //     dd($submission->candidate->full_name);
+    //     // }
+
+    //     // foreach ($meetPath->pathMeetingInvitation->submissionMeetingInvitation as $submission) {
+    //     //     dd($submission->candidate->full_name);
+    //     // }
+
+    //     // foreach ($challangePath->pathChallange->submissionChallange as $submission) {
+    //     //     dd($submission->candidate->full_name);
+    //     // }
+    //     $berkasCandidates = $berkasPath->pathPemberkasan->submissionPemberkasan;
+    //     $meetCandidates = $meetPath->pathMeetingInvitation->submissionMeetingInvitation;
+    //     $challangeCandidates = $challangePath->pathChallange->submissionChallange;
+    //     $approvedCandidates = $room->candidates()->wherePivot('status', 'approved')->paginate(10);
+    //     return view('recruiter.postRoomDetail', compact('room', 'allcandidates', 'berkasPath', 'meetPath', 'challangePath', 'berkasCandidates', 'meetCandidates', 'challangeCandidates', 'approvedCandidates'));
+    // }
     public function selectionRoomDetail($id)
     {
         $room = rooms::findOrFail($id);
-
-        $allcandidates
-            = $room->candidates()->paginate(10);
-        // dd($room->id);
+        $allcandidates = $room->candidates()->paginate(5);
         $berkasPath = paths::where('room_id', $room->id)->where('path_type_id', 1)->first();
         $meetPath = paths::where('room_id', $room->id)->where('path_type_id', 2)->first();
         $challangePath = paths::where('room_id', $room->id)->where('path_type_id', 3)->first();
-        // dd(paths::all());
-        return view('recruiter.postRoomDetail', compact('room', 'allcandidates', 'berkasPath', 'meetPath', 'challangePath'));
+
+        $berkasCandidates = $this->paginate($berkasPath->pathPemberkasan->submissionPemberkasan, 5);
+        $meetCandidates = $this->paginate($meetPath->pathMeetingInvitation->submissionMeetingInvitation, 5);
+        $challangeCandidates = $this->paginate($challangePath->pathChallange->submissionChallange, 5);
+        $approvedCandidates = $room->candidates()->wherePivot('status', 'approved')->paginate(5);
+
+        return view('recruiter.postRoomDetail', compact('room', 'allcandidates', 'berkasPath', 'meetPath', 'challangePath', 'berkasCandidates', 'meetCandidates', 'challangeCandidates', 'approvedCandidates'));
+    }
+
+    /**
+     * Paginate a given collection.
+     *
+     * @param \Illuminate\Support\Collection $items
+     * @param int $perPage
+     * @param int|null $page
+     * @param array $options
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function paginate(Collection $items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (LengthAwarePaginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
