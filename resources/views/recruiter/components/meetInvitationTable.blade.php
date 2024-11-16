@@ -111,8 +111,8 @@
                     </td>
                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
                         <img class="object-cover w-10 h-10 rounded-full"
-                            src="https://media.licdn.com/dms/image/D5603AQHC4IFjmiQi1Q/profile-displayphoto-shrink_400_400/0/1680830096821?e=1721260800&v=beta&t=djkevYMcgIYM7wYZJxQ1Xrp7N6e5KE8IqNhd0PCIi6A"
-                            alt="">
+                        src="{{  $meet->candidate->photo_path ? asset('storage/' .  $meet->candidate->photo_path) : asset('images/profile-empty.png') }}"
+                        alt="profile image - {{ $meet->candidate->full_name  }}">
                         <div class="ps-3">
                             <div class="text-base font-semibold">{{ $meet->candidate->full_name }}</div>
                             <div class="font-normal text-gray-500">{{ $meet->candidate->user->email }}</div>

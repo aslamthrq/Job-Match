@@ -7,6 +7,7 @@ use App\Models\companies_benefit;
 use App\Models\companies_type;
 use App\Models\company_user;
 use App\Models\path_types;
+use App\Models\RoomCandidate;
 use App\Models\rooms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,24 @@ class recruiterController extends Controller
 
     public function index()
     {
-        return view('recruiter.index');
+        // Ambil user yang sedang login
+        $user = auth()->user();
+
+        // Ambil ID company dari user yang sedang login
+        $company_id = $user->companyUser->company_id;
+
+        // Ambil 3 data terbaru dari room yang terkait dengan company berdasarkan kolom updated_at
+        $rooms = rooms::where('company_id', $company_id)
+            ->orderBy('updated_at', 'desc')
+            ->take(3)
+            ->get();
+
+        // Ambil count dari room yang terkait dengan company
+        $roomsCount = rooms::where('company_id', $company_id)->count();
+
+
+
+        return view('recruiter.index', compact('rooms', 'roomsCount'));
     }
 
     public function showProfile()
@@ -167,8 +185,38 @@ class recruiterController extends Controller
 
     public function candidate()
     {
-        return view('recruiter.talentPool');
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Ambil data perusahaan yang terkait dengan user yang sedang login
+        $companyUser = $user->companyUser()->first();
+
+        if (!$companyUser) {
+            // Jika user tidak terhubung dengan perusahaan manapun, arahkan kembali dengan pesan error
+            return redirect()->back()->with('error', 'User tidak terhubung dengan perusahaan manapun.');
+        }
+
+        // Ambil company_id dari companyUser
+        $company_id = $companyUser->company_id;
+
+        // Ambil semua room yang terkait dengan company
+        $rooms = rooms::where('company_id', $company_id)->get();
+
+        // Buat koleksi kosong untuk menyimpan semua kandidat
+        $allCandidates = collect();
+
+        // Iterasi melalui setiap room untuk mengumpulkan kandidat
+        foreach ($rooms as $room) {
+            $candidates = RoomCandidate::where('rooms_id', $room->id)
+                ->with('candidate') // Asumsikan bahwa RoomCandidate memiliki relasi dengan Candidate
+                ->get();
+            $allCandidates = $allCandidates->merge($candidates);
+        }
+
+        // Mengembalikan view dengan data kandidat
+        return view('recruiter.talentPool', compact('allCandidates'));
     }
+
 
     public function updateLogo(Request $request)
     {

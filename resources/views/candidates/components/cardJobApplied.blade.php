@@ -3,7 +3,7 @@
     <div class="w-full">
         <div class="flex justify-between">
             <div class="flex">
-                <img class="w-16 h-16 border rounded-lg" src="{{ url('images/logoJobMatch.png') }}" alt="Jese image">
+                <img class="w-16 h-16 border rounded-lg" src="{{ $room->company->logo ? asset('storage/' . $room->company->logo) : asset('images/profile-empty.png') }}" alt="profile image - {{ $room->company->company_name }}">
                 {{-- Keterangan --}}
                 <div class="ps-3">
                     <div class="flex items-center gap-4 text-base font-bold text-gray-800">

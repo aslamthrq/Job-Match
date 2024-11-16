@@ -119,8 +119,8 @@
                     </td>
                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
                         <img class="object-cover w-10 h-10 rounded-full"
-                            src="https://media.licdn.com/dms/image/D5603AQHC4IFjmiQi1Q/profile-displayphoto-shrink_400_400/0/1680830096821?e=1721260800&v=beta&t=djkevYMcgIYM7wYZJxQ1Xrp7N6e5KE8IqNhd0PCIi6A"
-                            alt="">
+                        src="{{  $berkas->candidate->photo_path ? asset('storage/' .  $berkas->candidate->photo_path) : asset('images/profile-empty.png') }}"
+                        alt="profile image - {{ $berkas->candidate->full_name  }}">
                         <div class="ps-3">
                             <div class="text-base font-semibold">{{ $berkas->candidate->full_name }}</div>
                             <div class="font-normal text-gray-500">{{ $berkas->candidate->user->email }}</div>
@@ -188,8 +188,8 @@
                             <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
                                 <div class="flex ">
                                     <img class="object-cover w-10 h-10 rounded-full"
-                                        src="https://media.licdn.com/dms/image/D5603AQHC4IFjmiQi1Q/profile-displayphoto-shrink_400_400/0/1680830096821?e=1721260800&v=beta&t=djkevYMcgIYM7wYZJxQ1Xrp7N6e5KE8IqNhd0PCIi6A"
-                                        alt="">
+                                        src="{{  $berkas->candidate->photo_path ? asset('storage/' .  $berkas->candidate->photo_path) : asset('images/profile-empty.png') }}"
+                                        alt="profile image - {{ $berkas->candidate->full_name  }}">
                                     <div class="ps-3">
                                         <div class="text-base font-semibold">{{ $berkas->candidate->full_name }}</div>
                                         <div class="font-normal text-gray-500">{{ $berkas->candidate->user->email }}

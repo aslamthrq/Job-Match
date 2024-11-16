@@ -60,7 +60,7 @@
                 </ol>
             </nav>
 
-            <h2 class="mb-2 text-xl font-bold text-gray-900">Marketing Manager</h2>
+            <h2 class="mb-2 text-xl font-bold text-gray-900">{{ $room->position_name }}</h2>
 
 
             <div class="grid grid-cols-4 gap-4 mb-4">
@@ -161,7 +161,7 @@
                         <button
                             class="flex items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 "
                             id="pemberkasan-tab" data-tabs-target="#pemberkasan" type="button" role="tab"
-                            aria-controls="pemberkasan" aria-selected="true">
+                            aria-controls="pemberkasan" aria-selected="false">
                             <div class="ps-3">
                                 <span
                                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-full bg-e73002">2</span>
@@ -214,7 +214,7 @@
                     </li>
                     <li class="flex items-center" role="path point selection">
                         <button class="flex me-2" id="approved-tab" data-tabs-target="#approved" type="button"
-                            role="tab" aria-controls="approved" aria-selected="true">
+                            role="tab" aria-controls="approved" aria-selected="false">
                             <div class="ps-3">
                                 <span
                                     class="inline-flex items-center justify-center w-8 h-8 text-white rounded-full bg-e73002">5</span>

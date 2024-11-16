@@ -116,6 +116,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($allCandidates as $roomCandidate)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
@@ -124,27 +125,47 @@
                                 </div>
                             </td>
                             <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://media.licdn.com/dms/image/D5603AQHC4IFjmiQi1Q/profile-displayphoto-shrink_400_400/0/1680830096821?e=1721260800&v=beta&t=djkevYMcgIYM7wYZJxQ1Xrp7N6e5KE8IqNhd0PCIi6A" alt="Jese image">
+                                <img class="w-10 h-10 rounded-full object-cover" src="{{  $roomCandidate->candidate->photo_path ? asset('storage/' .  $roomCandidate->candidate->photo_path) : asset('images/profile-empty.png') }}"
+                                alt="profile image - {{ $roomCandidate->candidate->full_name  }}">
                                 <div class="ps-3">
-                                    <div class="text-base font-semibold">Aslam Thariq Akbar Akrami</div>
-                                    <div class="font-normal text-gray-500">aslamthariq01@gmail.com</div>
+                                    <div class="text-base font-semibold">{{ $roomCandidate->candidate->full_name }}</div>
+                                    <div class="font-normal text-gray-500">{{ $roomCandidate->candidate->user->email }}</div>
                                 </div>  
                             </th>
                             <td class="px-6 py-4">
-                                Marketing Manager
+                                {{ $roomCandidate->rooms->where('id', $roomCandidate->rooms_id)->first()->position_name }}
                             </td>
                             <td class="px-6 py-4">
-                                Unit MSO
+                                {{ $roomCandidate->rooms->where('id', $roomCandidate->rooms_id)->first()->departement }}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Proccess
+                                    <div class="h-2.5 w-2.5 rounded-full 
+                                        @switch($roomCandidate->status)
+                                            @case('pending')
+                                                bg-yellow-500
+                                                @break
+                                            @case('approved')
+                                                bg-green-500
+                                                @break
+                                            @case('rejected')
+                                                bg-red-500
+                                                @break
+                                            @case('present')
+                                                bg-blue-500
+                                                @break
+                                            @default
+                                                bg-gray-500
+                                        @endswitch
+                                        me-2"></div>
+                                    {{ $roomCandidate->status }}
                                 </div>
                             </td>
                             <td class="px-6 py-4">
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
                             </td>
                         </tr>
+                        @endforeach
                        
                     </tbody>
                 </table>

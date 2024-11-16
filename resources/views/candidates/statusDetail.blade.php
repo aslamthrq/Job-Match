@@ -55,7 +55,7 @@
                 </ol>
             </nav>
 
-            <h2 class="mb-2 text-xl font-bold text-gray-900">Marketing Manager</h2>
+            <h2 class="mb-2 text-xl font-bold text-gray-900">{{ $room->position_name }}</h2>
 
             <div class="p-4 mb-4 border bg-gray-50 rounded-xl">
                 <ul class="flex items-center w-full text-sm font-medium text-center text-e73002 sm:text-base"
